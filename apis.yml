@@ -1,0 +1,7 @@
+aid: charles-schwab
+url: https://raw.githubusercontent.com/api-evangelist/charles-schwab/refs/heads/main/apis.yml
+modified: '2026-03-21'
+apis: []
+common:
+  - type: Website
+    url: https://www.charles-schwab.com
