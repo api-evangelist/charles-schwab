@@ -1,0 +1,44 @@
+extends:
+  - spectral:oas
+rules:
+  schwab-info-contact:
+    description: Schwab API definitions must declare contact information.
+    severity: error
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+  schwab-https-only:
+    description: All servers must use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://'
+  schwab-oauth2-required:
+    description: Endpoints must declare OAuth 2.0 security.
+    severity: warn
+    given: $.security
+    then:
+      function: truthy
+  schwab-operation-tags:
+    description: Operations must declare at least one tag.
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: tags
+      function: truthy
+  schwab-operation-summary:
+    description: Operations must include a summary.
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: summary
+      function: truthy
+  schwab-account-number-encrypted:
+    description: Account numbers in paths should be the hashValue (encrypted) form.
+    severity: info
+    given: $.paths[?(@property.match(/accountNumber/))]
+    then:
+      function: truthy

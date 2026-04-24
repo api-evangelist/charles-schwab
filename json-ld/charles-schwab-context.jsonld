@@ -1,0 +1,107 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schwab": "https://developer.schwab.com/schemas/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Account": {
+      "@id": "schwab:Account",
+      "@context": {
+        "accountNumber": "schwab:accountNumber",
+        "type": "schwab:accountType",
+        "isDayTrader": {
+          "@id": "schwab:isDayTrader",
+          "@type": "xsd:boolean"
+        },
+        "roundTrips": {
+          "@id": "schwab:roundTrips",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "Order": {
+      "@id": "schwab:Order",
+      "@context": {
+        "orderId": "schwab:orderId",
+        "session": "schwab:session",
+        "duration": "schwab:duration",
+        "orderType": "schwab:orderType",
+        "quantity": {
+          "@id": "schwab:quantity",
+          "@type": "xsd:decimal"
+        },
+        "filledQuantity": {
+          "@id": "schwab:filledQuantity",
+          "@type": "xsd:decimal"
+        },
+        "status": "schwab:status",
+        "enteredTime": {
+          "@id": "schwab:enteredTime",
+          "@type": "xsd:dateTime"
+        },
+        "closeTime": {
+          "@id": "schwab:closeTime",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Position": {
+      "@id": "schwab:Position",
+      "@context": {
+        "longQuantity": {
+          "@id": "schwab:longQuantity",
+          "@type": "xsd:decimal"
+        },
+        "shortQuantity": {
+          "@id": "schwab:shortQuantity",
+          "@type": "xsd:decimal"
+        },
+        "marketValue": {
+          "@id": "schwab:marketValue",
+          "@type": "xsd:decimal"
+        },
+        "averagePrice": {
+          "@id": "schwab:averagePrice",
+          "@type": "xsd:decimal"
+        }
+      }
+    },
+
+    "Quote": {
+      "@id": "schwab:Quote",
+      "@context": {
+        "symbol": "schema:tickerSymbol",
+        "bidPrice": {
+          "@id": "schwab:bidPrice",
+          "@type": "xsd:decimal"
+        },
+        "askPrice": {
+          "@id": "schwab:askPrice",
+          "@type": "xsd:decimal"
+        },
+        "lastPrice": {
+          "@id": "schwab:lastPrice",
+          "@type": "xsd:decimal"
+        },
+        "totalVolume": {
+          "@id": "schwab:totalVolume",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "Instrument": {
+      "@id": "schwab:Instrument",
+      "@context": {
+        "symbol": "schema:tickerSymbol",
+        "cusip": "schwab:cusip",
+        "description": "schema:description",
+        "assetType": "schwab:assetType"
+      }
+    }
+  }
+}

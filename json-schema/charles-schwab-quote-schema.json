@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.schwab.com/schemas/quote.json",
+  "title": "Schwab Quote",
+  "type": "object",
+  "required": ["symbol"],
+  "properties": {
+    "symbol": { "type": "string" },
+    "bidPrice": { "type": "number" },
+    "askPrice": { "type": "number" },
+    "lastPrice": { "type": "number" },
+    "openPrice": { "type": "number" },
+    "highPrice": { "type": "number" },
+    "lowPrice": { "type": "number" },
+    "netChange": { "type": "number" },
+    "totalVolume": { "type": "integer" },
+    "quoteTime": { "type": "integer" },
+    "tradeTime": { "type": "integer" }
+  }
+}

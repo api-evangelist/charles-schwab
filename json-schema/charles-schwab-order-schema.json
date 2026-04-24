@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.schwab.com/schemas/order.json",
+  "title": "Schwab Order",
+  "type": "object",
+  "required": ["orderType", "session", "duration", "orderStrategyType"],
+  "properties": {
+    "orderId": { "type": "string" },
+    "session": {
+      "type": "string",
+      "enum": ["NORMAL", "AM", "PM", "SEAMLESS"]
+    },
+    "duration": {
+      "type": "string",
+      "enum": ["DAY", "GOOD_TILL_CANCEL", "FILL_OR_KILL"]
+    },
+    "orderType": {
+      "type": "string",
+      "enum": ["MARKET", "LIMIT", "STOP", "STOP_LIMIT", "TRAILING_STOP"]
+    },
+    "quantity": { "type": "number" },
+    "filledQuantity": { "type": "number" },
+    "remainingQuantity": { "type": "number" },
+    "orderStrategyType": { "type": "string" },
+    "status": { "type": "string" },
+    "enteredTime": { "type": "string", "format": "date-time" },
+    "closeTime": { "type": "string", "format": "date-time" },
+    "orderLegCollection": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instruction": {
+            "type": "string",
+            "enum": ["BUY", "SELL", "BUY_TO_OPEN", "SELL_TO_CLOSE", "SELL_SHORT", "BUY_TO_COVER"]
+          },
+          "quantity": { "type": "number" },
+          "instrument": {
+            "type": "object",
+            "properties": {
+              "symbol": { "type": "string" },
+              "assetType": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

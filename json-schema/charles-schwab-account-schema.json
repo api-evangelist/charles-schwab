@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.schwab.com/schemas/account.json",
+  "title": "Schwab Account",
+  "type": "object",
+  "required": ["accountNumber"],
+  "properties": {
+    "accountNumber": { "type": "string" },
+    "type": { "type": "string" },
+    "roundTrips": { "type": "integer" },
+    "isDayTrader": { "type": "boolean" },
+    "isClosingOnlyRestricted": { "type": "boolean" },
+    "positions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "longQuantity": { "type": "number" },
+          "shortQuantity": { "type": "number" },
+          "marketValue": { "type": "number" },
+          "averagePrice": { "type": "number" }
+        }
+      }
+    },
+    "currentBalances": {
+      "type": "object",
+      "properties": {
+        "cashBalance": { "type": "number" },
+        "liquidationValue": { "type": "number" },
+        "availableFunds": { "type": "number" },
+        "buyingPower": { "type": "number" }
+      }
+    }
+  }
+}
