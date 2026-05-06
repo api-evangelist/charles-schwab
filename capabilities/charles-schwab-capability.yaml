@@ -1,0 +1,553 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Market Data API
+  description: REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains,
+    price history, market hours, instrument metadata, and movers for major US indices.
+  tags:
+  - Charles
+  - Schwab
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: charles-schwab
+    baseUri: https://api.schwabapi.com/marketdata/v1
+    description: Charles Schwab Market Data API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{CHARLES_SCHWAB_TOKEN}}'
+    resources:
+    - name: quotes
+      path: /quotes
+      operations:
+      - name: getquotes
+        method: GET
+        description: Get quotes for one or more symbols
+        inputParameters:
+        - name: symbols
+          in: query
+          type: string
+          required: true
+          description: Comma-separated list of ticker symbols.
+        - name: fields
+          in: query
+          type: string
+        - name: indicative
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: symbol-id-quotes
+      path: /{symbol_id}/quotes
+      operations:
+      - name: getquote
+        method: GET
+        description: Get quote for a specific symbol
+        inputParameters:
+        - name: symbol_id
+          in: path
+          type: string
+          required: true
+        - name: fields
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: chains
+      path: /chains
+      operations:
+      - name: getoptionchains
+        method: GET
+        description: Get option chain for a symbol
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        - name: contractType
+          in: query
+          type: string
+        - name: strikeCount
+          in: query
+          type: integer
+        - name: includeQuotes
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: expirationchain
+      path: /expirationchain
+      operations:
+      - name: getoptionexpirationchain
+        method: GET
+        description: Get option expiration chain for a symbol
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: pricehistory
+      path: /pricehistory
+      operations:
+      - name: getpricehistory
+        method: GET
+        description: Get price history candles for a symbol
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        - name: periodType
+          in: query
+          type: string
+        - name: period
+          in: query
+          type: integer
+        - name: frequencyType
+          in: query
+          type: string
+        - name: frequency
+          in: query
+          type: integer
+        - name: startDate
+          in: query
+          type: integer
+        - name: endDate
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: movers-symbol-id
+      path: /movers/{symbol_id}
+      operations:
+      - name: getmovers
+        method: GET
+        description: Get top movers for an index
+        inputParameters:
+        - name: symbol_id
+          in: path
+          type: string
+          required: true
+          description: Index symbol such as $DJI, $COMPX, or $SPX.
+        - name: sort
+          in: query
+          type: string
+        - name: frequency
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: markets
+      path: /markets
+      operations:
+      - name: getmarkethours
+        method: GET
+        description: Get market hours for one or more markets
+        inputParameters:
+        - name: markets
+          in: query
+          type: string
+          required: true
+        - name: date
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: markets-market-id
+      path: /markets/{market_id}
+      operations:
+      - name: getmarkethoursformarket
+        method: GET
+        description: Get market hours for a single market
+        inputParameters:
+        - name: market_id
+          in: path
+          type: string
+          required: true
+        - name: date
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: instruments
+      path: /instruments
+      operations:
+      - name: searchinstruments
+        method: GET
+        description: Search instruments by symbol or CUSIP
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        - name: projection
+          in: query
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: charles-schwab-rest
+    description: REST adapter for Charles Schwab Market Data API.
+    resources:
+    - path: /quotes
+      name: getquotes
+      operations:
+      - method: GET
+        name: getquotes
+        description: Get quotes for one or more symbols
+        call: charles-schwab.getquotes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /{symbol_id}/quotes
+      name: getquote
+      operations:
+      - method: GET
+        name: getquote
+        description: Get quote for a specific symbol
+        call: charles-schwab.getquote
+        with:
+          symbol_id: rest.symbol_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /chains
+      name: getoptionchains
+      operations:
+      - method: GET
+        name: getoptionchains
+        description: Get option chain for a symbol
+        call: charles-schwab.getoptionchains
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /expirationchain
+      name: getoptionexpirationchain
+      operations:
+      - method: GET
+        name: getoptionexpirationchain
+        description: Get option expiration chain for a symbol
+        call: charles-schwab.getoptionexpirationchain
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /pricehistory
+      name: getpricehistory
+      operations:
+      - method: GET
+        name: getpricehistory
+        description: Get price history candles for a symbol
+        call: charles-schwab.getpricehistory
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /movers/{symbol_id}
+      name: getmovers
+      operations:
+      - method: GET
+        name: getmovers
+        description: Get top movers for an index
+        call: charles-schwab.getmovers
+        with:
+          symbol_id: rest.symbol_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /markets
+      name: getmarkethours
+      operations:
+      - method: GET
+        name: getmarkethours
+        description: Get market hours for one or more markets
+        call: charles-schwab.getmarkethours
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /markets/{market_id}
+      name: getmarkethoursformarket
+      operations:
+      - method: GET
+        name: getmarkethoursformarket
+        description: Get market hours for a single market
+        call: charles-schwab.getmarkethoursformarket
+        with:
+          market_id: rest.market_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /instruments
+      name: searchinstruments
+      operations:
+      - method: GET
+        name: searchinstruments
+        description: Search instruments by symbol or CUSIP
+        call: charles-schwab.searchinstruments
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: charles-schwab-mcp
+    transport: http
+    description: MCP adapter for Charles Schwab Market Data API for AI agent use.
+    tools:
+    - name: getquotes
+      description: Get quotes for one or more symbols
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getquotes
+      with:
+        symbols: tools.symbols
+        fields: tools.fields
+        indicative: tools.indicative
+      inputParameters:
+      - name: symbols
+        type: string
+        description: Comma-separated list of ticker symbols.
+        required: true
+      - name: fields
+        type: string
+        description: fields
+      - name: indicative
+        type: boolean
+        description: indicative
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getquote
+      description: Get quote for a specific symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getquote
+      with:
+        symbol_id: tools.symbol_id
+        fields: tools.fields
+      inputParameters:
+      - name: symbol_id
+        type: string
+        description: symbol_id
+        required: true
+      - name: fields
+        type: string
+        description: fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getoptionchains
+      description: Get option chain for a symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getoptionchains
+      with:
+        symbol: tools.symbol
+        contractType: tools.contractType
+        strikeCount: tools.strikeCount
+        includeQuotes: tools.includeQuotes
+      inputParameters:
+      - name: symbol
+        type: string
+        description: symbol
+        required: true
+      - name: contractType
+        type: string
+        description: contractType
+      - name: strikeCount
+        type: integer
+        description: strikeCount
+      - name: includeQuotes
+        type: boolean
+        description: includeQuotes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getoptionexpirationchain
+      description: Get option expiration chain for a symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getoptionexpirationchain
+      with:
+        symbol: tools.symbol
+      inputParameters:
+      - name: symbol
+        type: string
+        description: symbol
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getpricehistory
+      description: Get price history candles for a symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getpricehistory
+      with:
+        symbol: tools.symbol
+        periodType: tools.periodType
+        period: tools.period
+        frequencyType: tools.frequencyType
+        frequency: tools.frequency
+        startDate: tools.startDate
+        endDate: tools.endDate
+      inputParameters:
+      - name: symbol
+        type: string
+        description: symbol
+        required: true
+      - name: periodType
+        type: string
+        description: periodType
+      - name: period
+        type: integer
+        description: period
+      - name: frequencyType
+        type: string
+        description: frequencyType
+      - name: frequency
+        type: integer
+        description: frequency
+      - name: startDate
+        type: integer
+        description: startDate
+      - name: endDate
+        type: integer
+        description: endDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmovers
+      description: Get top movers for an index
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getmovers
+      with:
+        symbol_id: tools.symbol_id
+        sort: tools.sort
+        frequency: tools.frequency
+      inputParameters:
+      - name: symbol_id
+        type: string
+        description: Index symbol such as $DJI, $COMPX, or $SPX.
+        required: true
+      - name: sort
+        type: string
+        description: sort
+      - name: frequency
+        type: integer
+        description: frequency
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmarkethours
+      description: Get market hours for one or more markets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getmarkethours
+      with:
+        markets: tools.markets
+        date: tools.date
+      inputParameters:
+      - name: markets
+        type: string
+        description: markets
+        required: true
+      - name: date
+        type: string
+        description: date
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getmarkethoursformarket
+      description: Get market hours for a single market
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.getmarkethoursformarket
+      with:
+        market_id: tools.market_id
+        date: tools.date
+      inputParameters:
+      - name: market_id
+        type: string
+        description: market_id
+        required: true
+      - name: date
+        type: string
+        description: date
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searchinstruments
+      description: Search instruments by symbol or CUSIP
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: charles-schwab.searchinstruments
+      with:
+        symbol: tools.symbol
+        projection: tools.projection
+      inputParameters:
+      - name: symbol
+        type: string
+        description: symbol
+        required: true
+      - name: projection
+        type: string
+        description: projection
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_TOKEN: CHARLES_SCHWAB_TOKEN
