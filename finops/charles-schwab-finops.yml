@@ -1,147 +1,87 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Charles Schwab
+providerId: charles-schwab
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
+tags:
+  - FinOps
+  - FOCUS
+  - Brokerage
+  - Trading
+description: 'FOCUS-aligned FinOps framing for Charles Schwab developer APIs: API access itself is free
+  for account holders, while underlying brokerage activity (commissions, margin, asset fees) and exchange
+  market-data fees produce the billing surface.'
+notes: APIs are not separately priced; meters reflect brokerage and exchange-data billing lines.
+sources:
+  - https://developer.schwab.com/
+  - https://www.schwab.com/pricing
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: Charles Schwab
-providerId: charles-schwab
-publisherName: Charles Schwab
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - Accounts
-  - Banking
-  - Brokerage
-  - Financial Services
-  - Investing
-  - Market Data
-  - OAuth 2.0
-  - Orders
-  - Trading
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Charles Schwab API surface. Provides a FOCUS-aligned
-  mapping for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: Charles Schwab & Co., Inc.
+serviceCategory: Financial Services / Brokerage
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Brokerage Fees + Exchange Data Pass-Through
+  billingFrequency: Continuous Settlement
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Refund
 focusColumns:
-  ServiceName: Charles Schwab
-  ServiceCategory: Developer Tools / API
+  ServiceName: Schwab Developer APIs
+  ServiceCategory: Financial Services
   ProviderName: Charles Schwab
-  PublisherName: Charles Schwab
-  InvoiceIssuerName: Charles Schwab
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Charles Schwab & Co., Inc.
+  InvoiceIssuerName: Charles Schwab & Co., Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: equity_trades
+    unit: trade
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - account
+      - venue
+  - name: option_contracts
+    unit: contract
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
+      - account
+  - name: margin_balance
+    unit: USD
+    aggregation: max
+  - name: asset_under_management
+    unit: USD
+    aggregation: avg
+    dimensions:
+      - product
+  - name: exchange_market_data_fees
+    unit: USD
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Charles Schwab Trader API
-    baseURL: https://api.schwabapi.com/trader/v1
-    tags:
-      - Accounts
-      - Brokerage
-      - Orders
-      - Trading
-      - Transactions
-    serviceName: Charles Schwab Trader API
-    serviceCategory: API
-  - name: Charles Schwab Market Data API
-    baseURL: https://api.schwabapi.com/marketdata/v1
-    tags:
-      - Equities
-      - Market Data
-      - Options
-      - Quotes
-    serviceName: Charles Schwab Market Data API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - exchange
+      - feed
+principles:
+  - name: Visibility
+    description: Use the Trader API transactions endpoints and Schwab statements to attribute fees to
+      accounts, strategies, and exchanges.
+  - name: Allocation
+    description: Tag orders with strategy/account metadata so fees and PnL roll up to the right business
+      unit.
+  - name: Optimization
+    description: Manage margin usage, route orders thoughtfully, and minimize redundant streaming subscriptions
+      to control exchange-data fees.
+  - name: Accountability
+    description: Trading desk / treasury owns Schwab fees and exchange data licenses; review monthly
+      against trading volume.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

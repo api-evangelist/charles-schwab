@@ -4,95 +4,50 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Charles Schwab
 providerId: charles-schwab
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Accounts
-  - Banking
-  - Brokerage
-  - Financial Services
-  - Investing
-  - Market Data
-  - OAuth 2.0
-  - Orders
-  - Trading
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Charles Schwab API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - Brokerage
+  - Trading
+  - Market Data
+description: Schwab rate limits are enforced per OAuth 2.0 application / user token across the Trader
+  and Market Data APIs. Numeric per-second/per-minute limits are gated behind the Schwab Developer Portal
+  login and not publicly published; consumers should expect 429 responses and use exponential backoff.
+notes: Public rate-limit numbers are not posted; portal access required. Exchange data may carry redistribution
+  / entitlement constraints separate from API throttling.
+sources:
+  - https://developer.schwab.com/
+  - https://developer.schwab.com/user-guides/get-started
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  unauthorized: 401
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Trader API (per token / app)
+    scope: oauth_token
     metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Charles Schwab Trader API
-      - Charles Schwab Market Data API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Charles Schwab Trader API
-      - Charles Schwab Market Data API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+    limit: see Schwab Developer Portal
+  - name: Market Data API (per token / app)
+    scope: oauth_token
     metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Charles Schwab Trader API
-      - Charles Schwab Market Data API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Charles Schwab Trader API
-      - Charles Schwab Market Data API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Charles Schwab Trader API
-      - Charles Schwab Market Data API
+    limit: see Schwab Developer Portal
+  - name: Streaming connections
+    scope: oauth_token
+    metric: concurrent_connections
+    limit: see Schwab Developer Portal
 policies:
+  - name: OAuth 2.0
+    description: All endpoints require OAuth 2.0 access tokens. Refresh tokens have documented lifetimes
+      requiring periodic re-auth.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Use exponential backoff on 429/503 and honor Retry-After when present.
+  - name: Order throttling
+    description: Order placement endpoints have lower limits than read-only balance/position queries
+      to protect brokerage infrastructure.
+  - name: Streaming entitlements
+    description: Streaming and real-time market data are subject to exchange entitlement rules; NBBO
+      vs Level 1/2 access depends on user agreements.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
