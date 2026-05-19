@@ -1,0 +1,94 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Trader API — Transactions
+  description: 'Charles Schwab Trader API — Transactions. 1 operations. Lead operation: List account transactions. Self-contained
+    Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Transactions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trader-transactions
+    baseUri: https://api.schwabapi.com/trader/v1
+    description: Charles Schwab Trader API — Transactions business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountNumber-transactions
+      path: /accounts/{accountNumber}/transactions
+      operations:
+      - name: listtransactions
+        method: GET
+        description: List account transactions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: startDate
+          in: query
+          type: string
+        - name: endDate
+          in: query
+          type: string
+        - name: types
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: trader-transactions-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Trader API — Transactions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountnumber}/transactions
+      name: accounts-accountnumber-transactions
+      description: REST surface for accounts-accountNumber-transactions.
+      operations:
+      - method: GET
+        name: listtransactions
+        description: List account transactions
+        call: trader-transactions.listtransactions
+        with:
+          accountNumber: rest.accountNumber
+          startDate: rest.startDate
+          endDate: rest.endDate
+          types: rest.types
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trader-transactions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Trader API — Transactions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-account-transactions
+      description: List account transactions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-transactions.listtransactions
+      with:
+        accountNumber: tools.accountNumber
+        startDate: tools.startDate
+        endDate: tools.endDate
+        types: tools.types
+      outputParameters:
+      - type: object
+        mapping: $.

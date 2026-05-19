@@ -1,0 +1,109 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Market Data API — Price History
+  description: 'Charles Schwab Market Data API — Price History. 1 operations. Lead operation: Get price history candles for
+    a symbol. Self-contained Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Price History
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: market-data-price-history
+    baseUri: https://api.schwabapi.com/marketdata/v1
+    description: Charles Schwab Market Data API — Price History business capability. Self-contained, no shared references.
+    resources:
+    - name: pricehistory
+      path: /pricehistory
+      operations:
+      - name: getpricehistory
+        method: GET
+        description: Get price history candles for a symbol
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        - name: periodType
+          in: query
+          type: string
+        - name: period
+          in: query
+          type: integer
+        - name: frequencyType
+          in: query
+          type: string
+        - name: frequency
+          in: query
+          type: integer
+        - name: startDate
+          in: query
+          type: integer
+        - name: endDate
+          in: query
+          type: integer
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: market-data-price-history-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Market Data API — Price History. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/pricehistory
+      name: pricehistory
+      description: REST surface for pricehistory.
+      operations:
+      - method: GET
+        name: getpricehistory
+        description: Get price history candles for a symbol
+        call: market-data-price-history.getpricehistory
+        with:
+          symbol: rest.symbol
+          periodType: rest.periodType
+          period: rest.period
+          frequencyType: rest.frequencyType
+          frequency: rest.frequency
+          startDate: rest.startDate
+          endDate: rest.endDate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: market-data-price-history-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Market Data API — Price History. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: get-price-history-candles-symbol
+      description: Get price history candles for a symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: market-data-price-history.getpricehistory
+      with:
+        symbol: tools.symbol
+        periodType: tools.periodType
+        period: tools.period
+        frequencyType: tools.frequencyType
+        frequency: tools.frequency
+        startDate: tools.startDate
+        endDate: tools.endDate
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,222 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Trader API — Orders
+  description: 'Charles Schwab Trader API — Orders. 4 operations. Lead operation: List orders for an account. Self-contained
+    Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Orders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trader-orders
+    baseUri: https://api.schwabapi.com/trader/v1
+    description: Charles Schwab Trader API — Orders business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountNumber-orders
+      path: /accounts/{accountNumber}/orders
+      operations:
+      - name: listordersbyaccount
+        method: GET
+        description: List orders for an account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: fromEnteredTime
+          in: query
+          type: string
+        - name: toEnteredTime
+          in: query
+          type: string
+        - name: status
+          in: query
+          type: string
+      - name: placeorder
+        method: POST
+        description: Place a new order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: accounts-accountNumber-orders-orderId
+      path: /accounts/{accountNumber}/orders/{orderId}
+      operations:
+      - name: getorder
+        method: GET
+        description: Get a specific order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: orderId
+          in: path
+          type: string
+          required: true
+      - name: cancelorder
+        method: DELETE
+        description: Cancel an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: orderId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: trader-orders-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Trader API — Orders. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountnumber}/orders
+      name: accounts-accountnumber-orders
+      description: REST surface for accounts-accountNumber-orders.
+      operations:
+      - method: GET
+        name: listordersbyaccount
+        description: List orders for an account
+        call: trader-orders.listordersbyaccount
+        with:
+          accountNumber: rest.accountNumber
+          fromEnteredTime: rest.fromEnteredTime
+          toEnteredTime: rest.toEnteredTime
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: placeorder
+        description: Place a new order
+        call: trader-orders.placeorder
+        with:
+          accountNumber: rest.accountNumber
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountnumber}/orders/{orderid}
+      name: accounts-accountnumber-orders-orderid
+      description: REST surface for accounts-accountNumber-orders-orderId.
+      operations:
+      - method: GET
+        name: getorder
+        description: Get a specific order
+        call: trader-orders.getorder
+        with:
+          accountNumber: rest.accountNumber
+          orderId: rest.orderId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: cancelorder
+        description: Cancel an order
+        call: trader-orders.cancelorder
+        with:
+          accountNumber: rest.accountNumber
+          orderId: rest.orderId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trader-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Trader API — Orders. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-orders-account
+      description: List orders for an account
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-orders.listordersbyaccount
+      with:
+        accountNumber: tools.accountNumber
+        fromEnteredTime: tools.fromEnteredTime
+        toEnteredTime: tools.toEnteredTime
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: place-new-order
+      description: Place a new order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: trader-orders.placeorder
+      with:
+        accountNumber: tools.accountNumber
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-specific-order
+      description: Get a specific order
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-orders.getorder
+      with:
+        accountNumber: tools.accountNumber
+        orderId: tools.orderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-order
+      description: Cancel an order
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: trader-orders.cancelorder
+      with:
+        accountNumber: tools.accountNumber
+        orderId: tools.orderId
+      outputParameters:
+      - type: object
+        mapping: $.

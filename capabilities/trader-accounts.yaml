@@ -1,0 +1,157 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Trader API — Accounts
+  description: 'Charles Schwab Trader API — Accounts. 3 operations. Lead operation: List accounts with balances and positions.
+    Self-contained Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Accounts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trader-accounts
+    baseUri: https://api.schwabapi.com/trader/v1
+    description: Charles Schwab Trader API — Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts
+      path: /accounts
+      operations:
+      - name: listaccounts
+        method: GET
+        description: List accounts with balances and positions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fields
+          in: query
+          type: string
+          description: Optional fields to include, e.g. positions.
+    - name: accounts-accountNumbers
+      path: /accounts/accountNumbers
+      operations:
+      - name: listaccountnumbers
+        method: GET
+        description: List linked account numbers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: accounts-accountNumber
+      path: /accounts/{accountNumber}
+      operations:
+      - name: getaccount
+        method: GET
+        description: Get account details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+        - name: fields
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: trader-accounts-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Trader API — Accounts. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts
+      name: accounts
+      description: REST surface for accounts.
+      operations:
+      - method: GET
+        name: listaccounts
+        description: List accounts with balances and positions
+        call: trader-accounts.listaccounts
+        with:
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/accountnumbers
+      name: accounts-accountnumbers
+      description: REST surface for accounts-accountNumbers.
+      operations:
+      - method: GET
+        name: listaccountnumbers
+        description: List linked account numbers
+        call: trader-accounts.listaccountnumbers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountnumber}
+      name: accounts-accountnumber
+      description: REST surface for accounts-accountNumber.
+      operations:
+      - method: GET
+        name: getaccount
+        description: Get account details
+        call: trader-accounts.getaccount
+        with:
+          accountNumber: rest.accountNumber
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trader-accounts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Trader API — Accounts. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-accounts-balances-and-positions
+      description: List accounts with balances and positions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-accounts.listaccounts
+      with:
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-linked-account-numbers
+      description: List linked account numbers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-accounts.listaccountnumbers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-account-details
+      description: Get account details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trader-accounts.getaccount
+      with:
+        accountNumber: tools.accountNumber
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.

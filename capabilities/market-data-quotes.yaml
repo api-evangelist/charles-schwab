@@ -1,0 +1,136 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Market Data API — Quotes
+  description: 'Charles Schwab Market Data API — Quotes. 2 operations. Lead operation: Get quotes for one or more symbols.
+    Self-contained Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Quotes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: market-data-quotes
+    baseUri: https://api.schwabapi.com/marketdata/v1
+    description: Charles Schwab Market Data API — Quotes business capability. Self-contained, no shared references.
+    resources:
+    - name: quotes
+      path: /quotes
+      operations:
+      - name: getquotes
+        method: GET
+        description: Get quotes for one or more symbols
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: symbols
+          in: query
+          type: string
+          description: Comma-separated list of ticker symbols.
+          required: true
+        - name: fields
+          in: query
+          type: string
+        - name: indicative
+          in: query
+          type: boolean
+    - name: symbol_id-quotes
+      path: /{symbol_id}/quotes
+      operations:
+      - name: getquote
+        method: GET
+        description: Get quote for a specific symbol
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: symbol_id
+          in: path
+          type: string
+          required: true
+        - name: fields
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: market-data-quotes-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Market Data API — Quotes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/quotes
+      name: quotes
+      description: REST surface for quotes.
+      operations:
+      - method: GET
+        name: getquotes
+        description: Get quotes for one or more symbols
+        call: market-data-quotes.getquotes
+        with:
+          symbols: rest.symbols
+          fields: rest.fields
+          indicative: rest.indicative
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/{symbol-id}/quotes
+      name: symbol-id-quotes
+      description: REST surface for symbol_id-quotes.
+      operations:
+      - method: GET
+        name: getquote
+        description: Get quote for a specific symbol
+        call: market-data-quotes.getquote
+        with:
+          symbol_id: rest.symbol_id
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: market-data-quotes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Market Data API — Quotes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-quotes-one-more-symbols
+      description: Get quotes for one or more symbols
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: market-data-quotes.getquotes
+      with:
+        symbols: tools.symbols
+        fields: tools.fields
+        indicative: tools.indicative
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-quote-specific-symbol
+      description: Get quote for a specific symbol
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: market-data-quotes.getquote
+      with:
+        symbol_id: tools.symbol_id
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.

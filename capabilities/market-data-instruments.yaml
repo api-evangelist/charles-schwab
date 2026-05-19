@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Charles Schwab Market Data API — Instruments
+  description: 'Charles Schwab Market Data API — Instruments. 1 operations. Lead operation: Search instruments by symbol or
+    CUSIP. Self-contained Naftiko capability covering one Charles Schwab business surface.'
+  tags:
+  - Charles Schwab
+  - Instruments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CHARLES_SCHWAB_API_KEY: CHARLES_SCHWAB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: market-data-instruments
+    baseUri: https://api.schwabapi.com/marketdata/v1
+    description: Charles Schwab Market Data API — Instruments business capability. Self-contained, no shared references.
+    resources:
+    - name: instruments
+      path: /instruments
+      operations:
+      - name: searchinstruments
+        method: GET
+        description: Search instruments by symbol or CUSIP
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: symbol
+          in: query
+          type: string
+          required: true
+        - name: projection
+          in: query
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.CHARLES_SCHWAB_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: market-data-instruments-rest
+    port: 8080
+    description: REST adapter for Charles Schwab Market Data API — Instruments. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/instruments
+      name: instruments
+      description: REST surface for instruments.
+      operations:
+      - method: GET
+        name: searchinstruments
+        description: Search instruments by symbol or CUSIP
+        call: market-data-instruments.searchinstruments
+        with:
+          symbol: rest.symbol
+          projection: rest.projection
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: market-data-instruments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Charles Schwab Market Data API — Instruments. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: search-instruments-symbol-cusip
+      description: Search instruments by symbol or CUSIP
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: market-data-instruments.searchinstruments
+      with:
+        symbol: tools.symbol
+        projection: tools.projection
+      outputParameters:
+      - type: object
+        mapping: $.
