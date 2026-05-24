@@ -116,6 +116,8 @@ common:
   url: json-schema/charles-schwab-order-schema.json
 - type: JSONSchema
   url: json-schema/charles-schwab-quote-schema.json
+- type: LLMsTxt
+  url: https://developer.schwab.com/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
