@@ -1,0 +1,1398 @@
+"""
+Charles Schwab GraphQL Schema
+Conceptual schema derived from the Schwab Trader API v2 and Market Data API.
+Developer Portal: https://developer.schwab.com/
+"""
+
+# ─── Scalars ──────────────────────────────────────────────────────────────────
+
+scalar DateTime
+scalar Decimal
+scalar JSON
+
+# ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum AccountType {
+  BROKERAGE
+  IRA
+  ROTH_IRA
+  ACCOUNT_401K
+  MARGIN
+  CASH
+}
+
+enum OrderStatus {
+  AWAITING_PARENT_ORDER
+  AWAITING_CONDITION
+  AWAITING_STOP_CONDITION
+  AWAITING_MANUAL_REVIEW
+  ACCEPTED
+  AWAITING_UR_OUT
+  PENDING_ACTIVATION
+  QUEUED
+  WORKING
+  REJECTED
+  PENDING_CANCEL
+  CANCELED
+  PENDING_REPLACE
+  REPLACED
+  FILLED
+  EXPIRED
+  NEW
+  AWAITING_RELEASE_TIME
+  PENDING_ACKNOWLEDGEMENT
+  PENDING_RECALL
+  UNKNOWN
+}
+
+enum OrderType {
+  MARKET
+  LIMIT
+  STOP
+  STOP_LIMIT
+  TRAILING_STOP
+  CABINET
+  NON_MARKETABLE
+  MARKET_ON_CLOSE
+  EXERCISE
+  TRAILING_STOP_LIMIT
+  NET_DEBIT
+  NET_CREDIT
+  NET_ZERO
+  LIMIT_ON_CLOSE
+}
+
+enum OrderInstruction {
+  BUY
+  SELL
+  BUY_TO_COVER
+  SELL_SHORT
+  BUY_TO_OPEN
+  BUY_TO_CLOSE
+  SELL_TO_OPEN
+  SELL_TO_CLOSE
+  EXCHANGE
+}
+
+enum OrderSession {
+  NORMAL
+  AM
+  PM
+  SEAMLESS
+}
+
+enum OrderDuration {
+  DAY
+  GOOD_TILL_CANCEL
+  FILL_OR_KILL
+  IMMEDIATE_OR_CANCEL
+  END_OF_WEEK
+  END_OF_MONTH
+  NEXT_END_OF_MONTH
+  UNKNOWN
+}
+
+enum AssetType {
+  EQUITY
+  MUTUAL_FUND
+  OPTION
+  FUTURE
+  FOREX
+  INDEX
+  CASH_EQUIVALENT
+  FIXED_INCOME
+  PRODUCT
+  CURRENCY
+  COLLECTIVE_INVESTMENT
+}
+
+enum PutCall {
+  PUT
+  CALL
+  UNKNOWN
+}
+
+enum OptionType {
+  VANILLA
+  BINARY
+  BARRIER
+  UNKNOWN
+}
+
+enum Market {
+  EQUITY
+  OPTION
+  FUTURE
+  BOND
+  FOREX
+}
+
+enum Direction {
+  UP
+  DOWN
+}
+
+enum ChangeType {
+  VALUE
+  PERCENT
+}
+
+enum Projection {
+  SYMBOL_SEARCH
+  SYMBOL_REGEX
+  DESC_SEARCH
+  DESC_REGEX
+  SEARCH
+  FUNDAMENTAL
+}
+
+enum TransactionType {
+  TRADE
+  RECEIVE_AND_DELIVER
+  DIVIDEND_OR_INTEREST
+  ACH_RECEIPT
+  ACH_DISBURSEMENT
+  CASH_RECEIPT
+  CASH_DISBURSEMENT
+  ELECTRONIC_FUND
+  WIRE_OUT
+  WIRE_IN
+  JOURNAL
+  MEMORANDUM
+  MARGIN_CALL
+  MONEY_MARKET
+  SMA_ADJUSTMENT
+}
+
+enum FrequencyType {
+  MINUTE
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum PeriodType {
+  DAY
+  MONTH
+  YEAR
+  YTD
+}
+
+# ─── Authentication & User Types ──────────────────────────────────────────────
+
+"""OAuth 2.0 authentication context for the Schwab API."""
+type Authentication {
+  clientId: String!
+  scope: [String!]!
+  accessToken: AccessToken!
+  refreshToken: RefreshToken!
+  tokenType: String!
+}
+
+"""Short-lived OAuth 2.0 access token (30-minute TTL)."""
+type AccessToken {
+  token: String!
+  expiresIn: Int!
+  issuedAt: DateTime!
+  expiresAt: DateTime!
+  tokenType: String!
+}
+
+"""Long-lived OAuth 2.0 refresh token (7-day TTL)."""
+type RefreshToken {
+  token: String!
+  expiresIn: Int!
+  issuedAt: DateTime!
+  expiresAt: DateTime!
+}
+
+"""Top-level user identity and linked account summary."""
+type UserPrincipals {
+  userId: ID!
+  userCdDomainId: String
+  primaryAccountId: String
+  lastLoginTime: DateTime
+  tokenExpirationTime: DateTime
+  loginTime: DateTime
+  accessLevel: String
+  stalePassword: Boolean
+  accounts: [UserAccount!]!
+  streamingInfo: StreamingToken
+  preferences: Preference
+  subscriptions: [UserSubscription!]!
+}
+
+"""Account association record on the authenticated user principal."""
+type UserAccount {
+  accountId: ID!
+  description: String
+  displayName: String
+  accountCdDomainId: String
+  company: String
+  segment: String
+  surrogateIds: JSON
+  preferences: Preference
+  acl: String
+  authorizations: JSON
+}
+
+"""User notification and feature subscription."""
+type UserSubscription {
+  subscriptionId: ID!
+  userId: ID!
+  type: String!
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Account-level display and trading preferences."""
+type Preference {
+  expressTrading: Boolean
+  directOptionsRouting: Boolean
+  directEquityRouting: Boolean
+  defaultEquityOrderLegInstruction: String
+  defaultEquityOrderType: OrderType
+  defaultEquityOrderPriceLinkType: String
+  defaultEquityOrderPriceLinkBasis: String
+  defaultEquityOrderDuration: OrderDuration
+  defaultEquityOrderMarketSession: OrderSession
+  mutualFundTaxLotMethod: String
+  optionTaxLotMethod: String
+  equityTaxLotMethod: String
+  defaultAdvancedToolLaunch: String
+  authTokenTimeout: String
+}
+
+"""Credentials and endpoint info for the Schwab Streaming Service."""
+type StreamingToken {
+  userId: String!
+  userCdDomainId: String
+  primaryAccountId: String
+  tokenTimestamp: DateTime
+  tokenExpirationTime: DateTime
+  appId: String
+  acl: String
+  quotes: JSON
+  streamerInfo: JSON
+}
+
+# ─── Customer ─────────────────────────────────────────────────────────────────
+
+"""Customer record associated with a Schwab account."""
+type Customer {
+  customerId: ID!
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  address: JSON
+  accounts: [Account!]!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+# ─── Account Types ────────────────────────────────────────────────────────────
+
+"""Base interface shared by all account variants."""
+interface Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+}
+
+"""Standard taxable brokerage account."""
+type BrokerageAccount implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  marginEnabled: Boolean
+}
+
+"""Traditional individual retirement account."""
+type IRAAccount implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  contributionYear: Int
+  contributionLimit: Decimal
+  contributionYTD: Decimal
+}
+
+"""Roth individual retirement account."""
+type RothIRA implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  contributionYear: Int
+  contributionLimit: Decimal
+  contributionYTD: Decimal
+}
+
+"""Employer-sponsored 401(k) retirement account."""
+type Account401k implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  employerMatchPct: Decimal
+  vestingSchedule: String
+}
+
+"""Margin-enabled account supporting borrowed purchasing power."""
+type MarginAccount implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  marginBalance: Decimal
+  shortBalance: Decimal
+  maintenanceCall: Decimal
+  maintenanceRequirement: Decimal
+}
+
+"""Cash-only account without margin privileges."""
+type CashAccount implements Account {
+  accountId: ID!
+  accountNumber: String!
+  type: AccountType!
+  description: String
+  roundTrips: Int
+  isDayTrader: Boolean
+  isClosingOnlyRestricted: Boolean
+  pfcbFlag: Boolean
+  positions: [Position!]!
+  balance: AccountBalance!
+  initialBalances: AccountBalance
+  currentBalances: AccountBalance
+  projectedBalances: AccountBalance
+  purchasingPower: PurchasingPower
+  cashAvailableForTrading: Decimal
+  cashAvailableForWithdrawal: Decimal
+  cashCall: Decimal
+}
+
+"""Monetary balances for an account at a point in time."""
+type AccountBalance {
+  liquidationValue: Decimal
+  longMarketValue: Decimal
+  shortMarketValue: Decimal
+  openPl: Decimal
+  closingPl: Decimal
+  costBasisTotal: Decimal
+  unsettledCash: Decimal
+  pendingDeposits: Decimal
+  cashBalance: Decimal
+  accruedInterest: Decimal
+  equityPercentage: Decimal
+  longOptionMarketValue: Decimal
+  shortOptionMarketValue: Decimal
+  mutualFundValue: Decimal
+  bondValue: Decimal
+  cashDebitCallValue: Decimal
+  pendingCash: Decimal
+  totalCash: Decimal
+}
+
+"""Available purchasing power broken down by asset class and settlement."""
+type PurchasingPower {
+  cashAvailableForTrading: Decimal
+  cashAvailableForWithdrawal: Decimal
+  cashCall: Decimal
+  longNonMarginableMarketValue: Decimal
+  totalCashFromOtherSegregatedFunds: Decimal
+  soldNotYetPurchased: Decimal
+  stockBuyingPower: Decimal
+  optionBuyingPower: Decimal
+  bondBuyingPower: Decimal
+  mutualFundBuyingPower: Decimal
+  availableFunds: Decimal
+  availableFundsNonMarginableTrade: Decimal
+  buyingPower: Decimal
+  buyingPowerNonMarginableTrade: Decimal
+  dayTradingBuyingPower: Decimal
+  dayTradingBuyingPowerCall: Decimal
+  maintenanceCall: Decimal
+  maintenanceRequirement: Decimal
+  marginBalance: Decimal
+  regTCall: Decimal
+  shortBalance: Decimal
+  shortMarginValue: Decimal
+  shortOptionMarketValue: Decimal
+  sma: Decimal
+  mutualFundValue: Decimal
+  bondValue: Decimal
+}
+
+# ─── Positions & Holdings ─────────────────────────────────────────────────────
+
+"""An instrument position held within an account."""
+type Position {
+  shortQuantity: Decimal
+  averagePrice: Decimal
+  currentDayProfitLoss: Decimal
+  currentDayProfitLossPercentage: Decimal
+  longQuantity: Decimal
+  settledLongQuantity: Decimal
+  settledShortQuantity: Decimal
+  agedQuantity: Decimal
+  instrument: Instrument!
+  marketValue: Decimal
+  maintenanceRequirement: Decimal
+  averageLongPrice: Decimal
+  averageShortPrice: Decimal
+  taxLotAverageLongPrice: Decimal
+  taxLotAverageShortPrice: Decimal
+  longOpenProfitLoss: Decimal
+  shortOpenProfitLoss: Decimal
+  previousSessionLongQuantity: Decimal
+  previousSessionShortQuantity: Decimal
+  currentDayCost: Decimal
+  holding: Holding
+}
+
+"""Aggregate cost-basis and lot detail for a held instrument."""
+type Holding {
+  holdingId: ID!
+  accountId: ID!
+  symbol: String!
+  totalQuantity: Decimal!
+  totalCostBasis: Decimal!
+  marketValue: Decimal
+  unrealizedGainLoss: Decimal
+  unrealizedGainLossPercent: Decimal
+  lots: [JSON]
+}
+
+# ─── Orders ───────────────────────────────────────────────────────────────────
+
+"""A persisted order record as returned by the Trader API."""
+type OrderRecord {
+  orderId: ID!
+  accountId: ID!
+  session: OrderSession
+  duration: OrderDuration
+  orderType: OrderType!
+  cancelTime: DateTime
+  complexOrderStrategyType: String
+  quantity: Decimal
+  filledQuantity: Decimal
+  remainingQuantity: Decimal
+  requestedDestination: String
+  destinationLinkName: String
+  releaseTime: DateTime
+  stopPrice: Decimal
+  stopPriceLinkBasis: String
+  stopPriceLinkType: String
+  stopPriceOffset: Decimal
+  stopType: String
+  priceLinkBasis: String
+  priceLinkType: String
+  price: Decimal
+  taxLotMethod: String
+  orderLegCollection: [OrderLeg!]!
+  activationPrice: Decimal
+  specialInstruction: String
+  orderStrategyType: String
+  status: OrderStatus!
+  enteredTime: DateTime
+  closeTime: DateTime
+  accountNumber: String
+  orderActivityCollection: [JSON]
+  replacingOrderCollection: [JSON]
+  childOrderStrategies: [JSON]
+  statusDescription: String
+}
+
+"""A single leg within a multi-leg or single-leg order."""
+type OrderLeg {
+  orderLegType: AssetType
+  legId: Int
+  instrument: Instrument!
+  instruction: OrderInstruction!
+  positionEffect: String
+  quantity: Decimal!
+  quantityType: String
+  divCapGains: String
+  toSymbol: String
+}
+
+"""A market order executed at the prevailing best available price."""
+type MarketOrder {
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  instruction: OrderInstruction!
+  session: OrderSession!
+  duration: OrderDuration!
+  status: OrderStatus
+  filledQuantity: Decimal
+  averageFillPrice: Decimal
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""A limit order specifying a maximum buy or minimum sell price."""
+type LimitOrder {
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  limitPrice: Decimal!
+  instruction: OrderInstruction!
+  session: OrderSession!
+  duration: OrderDuration!
+  status: OrderStatus
+  filledQuantity: Decimal
+  averageFillPrice: Decimal
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""A stop order that becomes a market order when the stop price is triggered."""
+type StopOrder {
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  stopPrice: Decimal!
+  instruction: OrderInstruction!
+  session: OrderSession!
+  duration: OrderDuration!
+  status: OrderStatus
+  filledQuantity: Decimal
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""A stop-limit order triggered at the stop price and filled at the limit price or better."""
+type StopLimitOrder {
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  stopPrice: Decimal!
+  limitPrice: Decimal!
+  instruction: OrderInstruction!
+  session: OrderSession!
+  duration: OrderDuration!
+  status: OrderStatus
+  filledQuantity: Decimal
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""A trailing stop order whose stop price adjusts with the market."""
+type TrailingStop {
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  stopPriceLinkType: String!
+  stopPriceOffset: Decimal!
+  instruction: OrderInstruction!
+  session: OrderSession!
+  duration: OrderDuration!
+  status: OrderStatus
+  filledQuantity: Decimal
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""An OCO (one-cancels-other) order pairing two child orders."""
+type OCOOrder {
+  orderId: ID!
+  accountId: ID!
+  childOrderStrategies: [OrderRecord!]!
+  status: OrderStatus
+  enteredTime: DateTime
+  closeTime: DateTime
+}
+
+"""An executed trade record associated with a filled order."""
+type Trade {
+  tradeId: ID!
+  orderId: ID!
+  accountId: ID!
+  symbol: String!
+  quantity: Decimal!
+  price: Decimal!
+  instruction: OrderInstruction!
+  assetType: AssetType!
+  executionTime: DateTime!
+  settlementDate: DateTime
+  commission: Decimal
+  fees: Decimal
+  netAmount: Decimal
+}
+
+# ─── Transactions ─────────────────────────────────────────────────────────────
+
+"""A historical account transaction (trade, dividend, transfer, etc.)."""
+type Transaction {
+  transactionId: ID!
+  accountId: ID!
+  type: TransactionType!
+  subAccount: String
+  tradeDate: DateTime
+  settlementDate: DateTime
+  netAmount: Decimal!
+  description: String
+  achStatus: String
+  dayTradeBuyingPowerEffect: Decimal
+  requirementReallocationAmount: Decimal
+  positionId: String
+  orderId: String
+  transactionItem: JSON
+  fees: JSON
+}
+
+# ─── Instruments ──────────────────────────────────────────────────────────────
+
+"""Base interface for all tradeable instruments."""
+interface Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+}
+
+"""A publicly traded equity (common or preferred stock)."""
+type Stock implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  exchange: String
+  exchangeName: String
+  type: String
+  fundamental: Fundamental
+}
+
+"""An exchange-traded equity instrument (alias for core equity object)."""
+type Equity implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  exchange: String
+  exchangeName: String
+}
+
+"""A fixed income debt instrument."""
+type Bond implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  bondFactor: String
+  bondMultiplier: Decimal
+  bondPrice: Decimal
+  maturityDate: DateTime
+  couponRate: Decimal
+  callDate: DateTime
+}
+
+"""An exchange-traded fund."""
+type ETF implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  exchange: String
+  exchangeName: String
+  fundamental: Fundamental
+}
+
+"""A market index (not directly tradeable)."""
+type Index implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  exchange: String
+  exchangeName: String
+}
+
+"""A pooled investment vehicle priced once daily at NAV."""
+type MutualFund implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  type: String
+  exchangeName: String
+  fundamental: Fundamental
+}
+
+"""An options contract granting the right to buy or sell an underlying at a set price."""
+type Option implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  type: OptionType
+  putCall: PutCall
+  underlyingSymbol: String
+  optionMultiplier: Int
+  deliverables: [JSON]
+  strikePrice: Decimal
+  expirationDate: DateTime
+  daysToExpiration: Int
+  expirationType: String
+  lastTradingDay: DateTime
+  settlementType: String
+  optionPremiumMultiplier: Decimal
+  penultimateLastDay: Boolean
+  optionDeliverablesList: [JSON]
+}
+
+"""A foreign exchange instrument pair."""
+type Forex implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  baseCurrency: String
+  quoteCurrency: String
+}
+
+"""A futures contract obligating delivery of an asset at a set date and price."""
+type Future implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  activeContract: Boolean
+  expirationDate: DateTime
+  firstNoticeDate: DateTime
+  lastTradingDate: DateTime
+  multiplier: Decimal
+  pricingMultiplier: Decimal
+  settlementMethod: String
+}
+
+"""A digital asset / cryptocurrency."""
+type Crypto implements Instrument {
+  assetType: AssetType!
+  cusip: String
+  symbol: String!
+  description: String
+  netChange: Decimal
+  exchange: String
+}
+
+"""Lightweight symbol reference used in watchlists and search results."""
+type Symbol {
+  symbol: String!
+  description: String
+  assetType: AssetType
+  exchange: String
+  cusip: String
+}
+
+# ─── Market Data ──────────────────────────────────────────────────────────────
+
+"""Real-time or delayed equity/ETF/index quote."""
+type Quote {
+  symbol: String!
+  assetType: AssetType!
+  assetMainType: String
+  cusip: String
+  assetSubType: String
+  description: String
+  bidPrice: Decimal
+  bidSize: Int
+  bidId: String
+  askPrice: Decimal
+  askSize: Int
+  askId: String
+  lastPrice: Decimal
+  lastSize: Int
+  lastId: String
+  openPrice: Decimal
+  highPrice: Decimal
+  lowPrice: Decimal
+  bidTick: String
+  closePrice: Decimal
+  netChange: Decimal
+  totalVolume: Int
+  quoteTimeInLong: String
+  tradeTimeInLong: String
+  mark: Decimal
+  exchange: String
+  exchangeName: String
+  marginable: Boolean
+  shortable: Boolean
+  volatility: Decimal
+  digits: Int
+  fiftyTwoWeekHigh: Decimal
+  fiftyTwoWeekLow: Decimal
+  nAV: Decimal
+  peRatio: Decimal
+  divAmount: Decimal
+  divYield: Decimal
+  divDate: String
+  securityStatus: String
+  regularMarketLastPrice: Decimal
+  regularMarketLastSize: Int
+  regularMarketNetChange: Decimal
+  regularMarketTradeTimeInLong: String
+  netPercentChangeInDouble: Decimal
+  markChangeInDouble: Decimal
+  markPercentChangeInDouble: Decimal
+  regularMarketPercentChangeInDouble: Decimal
+  delayed: Boolean
+  realtimeEntitled: Boolean
+}
+
+"""Options-specific quote with Greeks and IV."""
+type OptionQuote {
+  symbol: String!
+  description: String
+  bidPrice: Decimal
+  askPrice: Decimal
+  lastPrice: Decimal
+  markPrice: Decimal
+  bidSize: Int
+  askSize: Int
+  lastSize: Int
+  highPrice: Decimal
+  lowPrice: Decimal
+  openPrice: Decimal
+  closePrice: Decimal
+  totalVolume: Int
+  tradeDate: DateTime
+  tradeTimeInLong: String
+  quoteTimeInLong: String
+  netChange: Decimal
+  volatility: Decimal
+  delta: Decimal
+  gamma: Decimal
+  theta: Decimal
+  vega: Decimal
+  rho: Decimal
+  openInterest: Int
+  timeValue: Decimal
+  theoreticalOptionValue: Decimal
+  theoreticalVolatility: Decimal
+  strikePrice: Decimal
+  expirationDate: DateTime
+  daysToExpiration: Int
+  expirationType: String
+  lastTradingDay: String
+  multiplier: Decimal
+  settlementType: String
+  deliverableNote: String
+  percentChange: Decimal
+  markChange: Decimal
+  markPercentChange: Decimal
+  intrinsicValue: Decimal
+  extrinsicValue: Decimal
+  inTheMoney: Boolean
+  mini: Boolean
+  nonStandard: Boolean
+  penultimateLastDay: Boolean
+}
+
+"""Full option chain grid for an underlying symbol."""
+type OptionChain {
+  symbol: String!
+  status: String
+  underlying: Quote
+  strategy: String
+  interval: Decimal
+  isDelayed: Boolean
+  isIndex: Boolean
+  daysToExpiration: Decimal
+  interestRate: Decimal
+  underlyingPrice: Decimal
+  volatility: Decimal
+  callExpDateMap: JSON
+  putExpDateMap: JSON
+  expirations: [OptionExpiration!]
+  numberOfContracts: Int
+}
+
+"""A single option expiration date with summary stats."""
+type OptionExpiration {
+  expirationDate: String!
+  daysToExpiration: Int!
+  expirationType: String
+  standard: Boolean
+  calls: [OptionQuote!]
+  puts: [OptionQuote!]
+}
+
+"""A single OHLCV candle."""
+type OHLCV {
+  open: Decimal!
+  high: Decimal!
+  low: Decimal!
+  close: Decimal!
+  volume: Int!
+  datetime: DateTime!
+}
+
+"""Price history series for a symbol."""
+type HistoricalData {
+  symbol: String!
+  isEmpty: Boolean
+  candles: [OHLCV!]!
+  previousClose: Decimal
+  previousCloseDate: DateTime
+}
+
+"""Exchange trading hours for a given market on a date."""
+type MarketHour {
+  date: String!
+  marketType: Market!
+  exchange: String
+  category: String
+  exchangeName: String
+  isOpen: Boolean!
+  sessionHours: JSON
+}
+
+"""A market mover (top gainer/loser) on a major index."""
+type MoversData {
+  symbol: String!
+  description: String
+  change: Decimal
+  percentChange: Decimal
+  direction: Direction
+  lastPrice: Decimal
+  totalVolume: Int
+  trades: Int
+}
+
+"""Fundamental financial data for an instrument."""
+type Fundamental {
+  symbol: String!
+  high52: Decimal
+  low52: Decimal
+  dividendAmount: Decimal
+  dividendYield: Decimal
+  dividendDate: String
+  peRatio: Decimal
+  pegRatio: Decimal
+  pbRatio: Decimal
+  prRatio: Decimal
+  pcfRatio: Decimal
+  grossMarginTTM: Decimal
+  grossMarginMRQ: Decimal
+  netProfitMarginTTM: Decimal
+  netProfitMarginMRQ: Decimal
+  operatingMarginTTM: Decimal
+  operatingMarginMRQ: Decimal
+  returnOnEquity: Decimal
+  returnOnAssets: Decimal
+  returnOnInvestment: Decimal
+  quickRatio: Decimal
+  currentRatio: Decimal
+  interestCoverage: Decimal
+  totalDebtToCapital: Decimal
+  ltDebtToEquity: Decimal
+  totalDebtToEquity: Decimal
+  epsTTM: Decimal
+  epsChangePercentTTM: Decimal
+  epsChangeYear: Decimal
+  epsChange: Decimal
+  revChangeYear: Decimal
+  revChangeTTM: Decimal
+  revChangeIn: Decimal
+  sharesOutstanding: Decimal
+  marketCapFloat: Decimal
+  marketCap: Decimal
+  bookValuePerShare: Decimal
+  shortIntToFloat: Decimal
+  shortIntDayToCover: Decimal
+  divGrowthRate3Year: Decimal
+  dividendPayAmount: Decimal
+  dividendPayDate: String
+  beta: Decimal
+  vol1DayAvg: Decimal
+  vol10DayAvg: Decimal
+  vol3MonthAvg: Decimal
+  avg1DayVolume: Int
+  avg3MonthVolume: Int
+  declarationDate: String
+  dividendFreq: Int
+  eps: Decimal
+  corpActionDate: String
+  dtnVolume: Int
+  nextDividendPayDate: String
+  nextDividendDate: String
+  fundLeverageFactor: Decimal
+  fundStrategy: String
+}
+
+# ─── Research & News ──────────────────────────────────────────────────────────
+
+"""A news headline and summary for one or more symbols."""
+type News {
+  newsId: ID!
+  headline: String!
+  story: String
+  source: String
+  publishedAt: DateTime!
+  symbols: [String!]
+  url: String
+  imageUrl: String
+}
+
+"""Research report from a broker or third-party provider."""
+type Research {
+  reportId: ID!
+  title: String!
+  author: String
+  provider: String
+  publishedAt: DateTime!
+  summary: String
+  symbols: [String!]
+  url: String
+  rating: AnalystRating
+}
+
+"""Analyst price target and buy/sell/hold rating for an equity."""
+type AnalystRating {
+  symbol: String!
+  provider: String!
+  rating: String!
+  priceTarget: Decimal
+  priceTargetHigh: Decimal
+  priceTargetLow: Decimal
+  ratingDate: DateTime
+  analystName: String
+  firmName: String
+}
+
+"""Consensus earnings estimate for an upcoming reporting period."""
+type EarningEstimate {
+  symbol: String!
+  fiscalPeriod: String!
+  reportDate: DateTime
+  estimatedEPS: Decimal
+  actualEPS: Decimal
+  surprise: Decimal
+  surprisePercent: Decimal
+  consensusEPS: Decimal
+  numberOfEstimates: Int
+}
+
+# ─── Watchlists ───────────────────────────────────────────────────────────────
+
+"""A named list of symbols maintained by the user."""
+type WatchList {
+  watchlistId: ID!
+  accountId: ID!
+  name: String!
+  watchlistItems: [WatchListInstrument!]!
+}
+
+"""A single instrument entry within a watchlist."""
+type WatchListInstrument {
+  sequenceId: Int
+  quantity: Decimal
+  averagePrice: Decimal
+  commission: Decimal
+  purchasedDate: DateTime
+  instrument: Instrument!
+}
+
+# ─── Screener ─────────────────────────────────────────────────────────────────
+
+"""A saved equity screener configuration."""
+type Screener {
+  screenerId: ID!
+  name: String
+  filters: [Filter!]!
+  results: [Quote]
+  resultCount: Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""A single screening criterion (field + operator + value)."""
+type Filter {
+  field: String!
+  operator: String!
+  value: String!
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────
+
+input OrderInput {
+  orderType: OrderType!
+  session: OrderSession!
+  duration: OrderDuration!
+  orderStrategyType: String!
+  price: Decimal
+  stopPrice: Decimal
+  stopPriceLinkType: String
+  stopPriceOffset: Decimal
+  complexOrderStrategyType: String
+  quantity: Decimal
+  orderLegCollection: [OrderLegInput!]!
+  childOrderStrategies: [OrderInput]
+}
+
+input OrderLegInput {
+  orderLegType: AssetType
+  instrument: InstrumentInput!
+  instruction: OrderInstruction!
+  positionEffect: String
+  quantity: Decimal!
+}
+
+input InstrumentInput {
+  symbol: String!
+  assetType: AssetType!
+  cusip: String
+}
+
+input OrderFilter {
+  fromEnteredTime: DateTime
+  toEnteredTime: DateTime
+  status: OrderStatus
+  maxResults: Int
+}
+
+input TransactionFilter {
+  startDate: DateTime
+  endDate: DateTime
+  types: [TransactionType]
+  symbol: String
+}
+
+input OptionChainFilter {
+  contractType: PutCall
+  strikeCount: Int
+  includeQuotes: Boolean
+  strategy: String
+  interval: Decimal
+  strike: Decimal
+  range: String
+  fromDate: String
+  toDate: String
+  volatility: Decimal
+  underlyingPrice: Decimal
+  interestRate: Decimal
+  daysToExpiration: Int
+  expMonth: String
+  optionType: OptionType
+}
+
+input PriceHistoryFilter {
+  periodType: PeriodType
+  period: Int
+  frequencyType: FrequencyType
+  frequency: Int
+  startDate: DateTime
+  endDate: DateTime
+  needExtendedHoursData: Boolean
+  needPreviousClosePriceAndDate: Boolean
+}
+
+input WatchListInput {
+  name: String!
+  watchlistItems: [WatchListItemInput!]!
+}
+
+input WatchListItemInput {
+  symbol: String!
+  assetType: AssetType!
+  sequenceId: Int
+}
+
+input PreferenceInput {
+  expressTrading: Boolean
+  directOptionsRouting: Boolean
+  directEquityRouting: Boolean
+  defaultEquityOrderLegInstruction: String
+  defaultEquityOrderType: OrderType
+  defaultEquityOrderDuration: OrderDuration
+  defaultEquityOrderMarketSession: OrderSession
+  mutualFundTaxLotMethod: String
+  optionTaxLotMethod: String
+  equityTaxLotMethod: String
+}
+
+input ScreenerFilter {
+  field: String!
+  operator: String!
+  value: String!
+}
+
+# ─── Root Types ───────────────────────────────────────────────────────────────
+
+type Query {
+  """Fetch a single linked account by ID."""
+  account(accountId: ID!): Account
+
+  """List all accounts linked to the authenticated user."""
+  accounts: [Account!]!
+
+  """Fetch a single order within an account."""
+  order(accountId: ID!, orderId: ID!): OrderRecord
+
+  """List orders within an account with optional filters."""
+  orders(accountId: ID!, filter: OrderFilter): [OrderRecord!]!
+
+  """Fetch a single transaction by ID."""
+  transaction(accountId: ID!, transactionId: ID!): Transaction
+
+  """List transactions within an account with optional filters."""
+  transactions(accountId: ID!, filter: TransactionFilter): [Transaction!]!
+
+  """Fetch a real-time or delayed quote for a single symbol."""
+  quote(symbol: String!, fields: [String]): Quote
+
+  """Fetch quotes for multiple symbols in a single request."""
+  quotes(symbols: [String!]!, fields: [String]): [Quote!]!
+
+  """Retrieve the full option chain for an underlying symbol."""
+  optionChain(symbol: String!, filter: OptionChainFilter): OptionChain
+
+  """Retrieve OHLCV price history for a symbol."""
+  priceHistory(symbol: String!, filter: PriceHistoryFilter): HistoricalData
+
+  """Retrieve market hours for one or more markets on a given date."""
+  marketHours(markets: [Market!]!, date: String): [MarketHour!]!
+
+  """Retrieve top movers for a major index."""
+  movers(index: String!, direction: Direction, change: ChangeType): [MoversData!]!
+
+  """Retrieve an instrument by CUSIP."""
+  instrument(cusip: String!): Instrument
+
+  """Search for instruments by symbol or description."""
+  searchInstruments(symbol: String!, projection: Projection): [Instrument!]!
+
+  """List all watchlists for an account."""
+  watchlists(accountId: ID!): [WatchList!]!
+
+  """Fetch a single watchlist."""
+  watchlist(accountId: ID!, watchlistId: ID!): WatchList
+
+  """Retrieve authenticated user principal data and streaming credentials."""
+  userPrincipals: UserPrincipals
+
+  """Retrieve news headlines, optionally filtered by symbols."""
+  news(symbols: [String!], count: Int): [News!]!
+
+  """Run an equity screener with one or more filter criteria."""
+  screener(filters: [ScreenerFilter!]!): Screener
+
+  """Retrieve analyst ratings for a symbol."""
+  analystRatings(symbol: String!): [AnalystRating!]!
+
+  """Retrieve consensus earnings estimates for a symbol."""
+  earningEstimates(symbol: String!): [EarningEstimate!]!
+
+  """Retrieve customer profile for the authenticated user."""
+  customer: Customer
+}
+
+type Mutation {
+  """Place a new order within an account."""
+  placeOrder(accountId: ID!, input: OrderInput!): OrderRecord
+
+  """Cancel an existing working order."""
+  cancelOrder(accountId: ID!, orderId: ID!): Boolean
+
+  """Replace an existing order with a new order specification."""
+  replaceOrder(accountId: ID!, orderId: ID!, input: OrderInput!): OrderRecord
+
+  """Create a new watchlist for an account."""
+  createWatchlist(accountId: ID!, input: WatchListInput!): WatchList
+
+  """Update an existing watchlist."""
+  updateWatchlist(accountId: ID!, watchlistId: ID!, input: WatchListInput!): WatchList
+
+  """Delete a watchlist."""
+  deleteWatchlist(accountId: ID!, watchlistId: ID!): Boolean
+
+  """Update trading and display preferences for an account."""
+  updatePreferences(accountId: ID!, input: PreferenceInput!): Preference
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
