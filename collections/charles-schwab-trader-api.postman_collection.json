@@ -1,0 +1,983 @@
+{
+  "item": [
+    {
+      "id": "4efc6ddb-c510-4d23-925e-807890324730",
+      "name": "Accounts",
+      "description": {
+        "content": "Linked brokerage accounts, balances, and positions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "55481d6c-4b72-4632-af66-84f2c8c38f68",
+          "name": "List linked account numbers",
+          "request": {
+            "name": "List linked account numbers",
+            "description": {
+              "content": "Returns the list of encrypted account identifiers linked to the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                "accountNumbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94afa887-55d3-477a-a08e-74da5fda2aeb",
+              "name": "List of linked accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "accountNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountNumber\": \"string\",\n    \"hashValue\": \"string\"\n  },\n  {\n    \"accountNumber\": \"string\",\n    \"hashValue\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9aa71a4f-278b-42fb-8678-5d1151137121",
+          "name": "List accounts with balances and positions",
+          "request": {
+            "name": "List accounts with balances and positions",
+            "description": {
+              "content": "Returns brokerage accounts with optional positions and balances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Optional fields to include, e.g. positions."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c64aee86-6598-4250-87e1-6541d4746ba8",
+              "name": "Account list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountNumber\": \"string\",\n    \"type\": \"string\",\n    \"roundTrips\": 7934,\n    \"isDayTrader\": false,\n    \"isClosingOnlyRestricted\": false,\n    \"positions\": [\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"OPTION\"\n        },\n        \"longQuantity\": 6133.59394649441,\n        \"shortQuantity\": 5102.326525660662,\n        \"marketValue\": 2653.5559521323403,\n        \"averagePrice\": 7429.692191248839\n      },\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"MUTUAL_FUND\"\n        },\n        \"longQuantity\": 6871.864681079934,\n        \"shortQuantity\": 5038.227274019335,\n        \"marketValue\": 5816.926718667423,\n        \"averagePrice\": 593.1160379803702\n      }\n    ],\n    \"currentBalances\": {\n      \"cashBalance\": 5243.460055118095,\n      \"liquidationValue\": 8484.540739276375,\n      \"availableFunds\": 6553.721313454978,\n      \"buyingPower\": 8666.040941252575\n    }\n  },\n  {\n    \"accountNumber\": \"string\",\n    \"type\": \"string\",\n    \"roundTrips\": 882,\n    \"isDayTrader\": true,\n    \"isClosingOnlyRestricted\": true,\n    \"positions\": [\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"INDEX\"\n        },\n        \"longQuantity\": 657.3736363623195,\n        \"shortQuantity\": 1707.7148781478613,\n        \"marketValue\": 2220.50322450398,\n        \"averagePrice\": 5258.087310582174\n      },\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"MUTUAL_FUND\"\n        },\n        \"longQuantity\": 2120.7102580402193,\n        \"shortQuantity\": 5884.656481964706,\n        \"marketValue\": 3312.5521666991076,\n        \"averagePrice\": 5922.926981898886\n      }\n    ],\n    \"currentBalances\": {\n      \"cashBalance\": 968.1572569409768,\n      \"liquidationValue\": 2162.9866999247183,\n      \"availableFunds\": 8884.630165747312,\n      \"buyingPower\": 5210.549028985254\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f06661d6-50d5-4b6e-9e2f-ee72353a443f",
+          "name": "Get account details",
+          "request": {
+            "name": "Get account details",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e1ea793-8735-487f-82c9-9ba8966bd657",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountNumber\": \"string\",\n  \"type\": \"string\",\n  \"roundTrips\": 2482,\n  \"isDayTrader\": true,\n  \"isClosingOnlyRestricted\": false,\n  \"positions\": [\n    {\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"EQUITY\"\n      },\n      \"longQuantity\": 4932.682572237277,\n      \"shortQuantity\": 6167.119306645244,\n      \"marketValue\": 1831.255240536861,\n      \"averagePrice\": 5482.27613736086\n    },\n    {\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"MUTUAL_FUND\"\n      },\n      \"longQuantity\": 3889.0029384178383,\n      \"shortQuantity\": 4564.334695672971,\n      \"marketValue\": 2307.078555230958,\n      \"averagePrice\": 4584.556054201494\n    }\n  ],\n  \"currentBalances\": {\n    \"cashBalance\": 8901.910586902957,\n    \"liquidationValue\": 4502.676784108861,\n    \"availableFunds\": 600.41668318213,\n    \"buyingPower\": 3334.4843460560382\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "42269b03-cf59-48db-b714-051d08db7ef4",
+      "name": "Orders",
+      "description": {
+        "content": "Place, retrieve, and cancel orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5dcd7c6f-1f4c-40e5-8519-393b7c4249cb",
+          "name": "List orders for an account",
+          "request": {
+            "name": "List orders for an account",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromEnteredTime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toEnteredTime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc699597-966e-4c05-9b39-70812e9c099f",
+              "name": "Orders list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromEnteredTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toEnteredTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderType\": \"LIMIT\",\n    \"session\": \"PM\",\n    \"duration\": \"DAY\",\n    \"orderStrategyType\": \"string\",\n    \"orderId\": \"string\",\n    \"complexOrderStrategyType\": \"string\",\n    \"quantity\": 1572.2640451710301,\n    \"filledQuantity\": 6579.999853954073,\n    \"remainingQuantity\": 1243.0533782092023,\n    \"requestedDestination\": \"string\",\n    \"status\": \"string\",\n    \"enteredTime\": \"1952-09-17T13:00:51.771Z\",\n    \"closeTime\": \"1961-11-18T05:07:41.070Z\",\n    \"orderLegCollection\": [\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY\",\n        \"quantity\": 6517.09673851487,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"EQUITY\"\n        }\n      },\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY_TO_OPEN\",\n        \"quantity\": 3874.13028665071,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"MUTUAL_FUND\"\n        }\n      }\n    ]\n  },\n  {\n    \"orderType\": \"MARKET\",\n    \"session\": \"PM\",\n    \"duration\": \"DAY\",\n    \"orderStrategyType\": \"string\",\n    \"orderId\": \"string\",\n    \"complexOrderStrategyType\": \"string\",\n    \"quantity\": 3914.650546270615,\n    \"filledQuantity\": 3868.623652515485,\n    \"remainingQuantity\": 5606.187511584909,\n    \"requestedDestination\": \"string\",\n    \"status\": \"string\",\n    \"enteredTime\": \"2023-08-23T22:39:18.707Z\",\n    \"closeTime\": \"2024-01-07T14:42:01.626Z\",\n    \"orderLegCollection\": [\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY_TO_COVER\",\n        \"quantity\": 2516.562023344765,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"INDEX\"\n        }\n      },\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY_TO_OPEN\",\n        \"quantity\": 9543.56430472556,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"INDEX\"\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43c9c0a3-4db6-4c8c-87eb-697cfc902d27",
+          "name": "Place a new order",
+          "request": {
+            "name": "Place a new order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderType\": \"<string>\",\n  \"session\": \"<string>\",\n  \"duration\": \"<string>\",\n  \"orderStrategyType\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"complexOrderStrategyType\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"filledQuantity\": \"<number>\",\n  \"remainingQuantity\": \"<number>\",\n  \"requestedDestination\": \"<string>\",\n  \"status\": \"<string>\",\n  \"enteredTime\": \"<dateTime>\",\n  \"closeTime\": \"<dateTime>\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"<string>\",\n        \"cusip\": \"<string>\",\n        \"description\": \"<string>\",\n        \"assetType\": \"<string>\"\n      }\n    },\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"<string>\",\n        \"cusip\": \"<string>\",\n        \"description\": \"<string>\",\n        \"assetType\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b1e34b7-37de-422a-a136-40f70945a0c4",
+              "name": "Order accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderType\": \"<string>\",\n  \"session\": \"<string>\",\n  \"duration\": \"<string>\",\n  \"orderStrategyType\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"complexOrderStrategyType\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"filledQuantity\": \"<number>\",\n  \"remainingQuantity\": \"<number>\",\n  \"requestedDestination\": \"<string>\",\n  \"status\": \"<string>\",\n  \"enteredTime\": \"<dateTime>\",\n  \"closeTime\": \"<dateTime>\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"MUTUAL_FUND\"\n      }\n    },\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"OPTION\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8c2ec92-6780-4dda-9084-6facd9b4cd8e",
+          "name": "Get a specific order",
+          "request": {
+            "name": "Get a specific order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa335e77-aa70-4f0b-bb48-6043b4eef4b3",
+              "name": "Order details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderType\": \"MARKET\",\n  \"session\": \"PM\",\n  \"duration\": \"FILL_OR_KILL\",\n  \"orderStrategyType\": \"string\",\n  \"orderId\": \"string\",\n  \"complexOrderStrategyType\": \"string\",\n  \"quantity\": 5076.645480201245,\n  \"filledQuantity\": 991.1051985401864,\n  \"remainingQuantity\": 891.2124373369102,\n  \"requestedDestination\": \"string\",\n  \"status\": \"string\",\n  \"enteredTime\": \"1979-06-26T13:28:22.913Z\",\n  \"closeTime\": \"2000-12-21T13:33:01.623Z\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"string\",\n      \"instruction\": \"SELL_TO_CLOSE\",\n      \"quantity\": 3078.941455484915,\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"OPTION\"\n      }\n    },\n    {\n      \"orderLegType\": \"string\",\n      \"instruction\": \"BUY_TO_COVER\",\n      \"quantity\": 8326.49540430456,\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"EQUITY\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "637fae35-3a93-4f56-8c09-333080098eb0",
+          "name": "Cancel an order",
+          "request": {
+            "name": "Cancel an order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16d6f559-6a69-4354-b7be-94dad4762ef7",
+              "name": "Order canceled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6bf7d3e1-1acd-437f-bd41-b4a866b1392f",
+      "name": "Transactions",
+      "description": {
+        "content": "Account transaction history",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d5b3229-bc95-4130-b87b-bbb6b3ee27a9",
+          "name": "List account transactions",
+          "request": {
+            "name": "List account transactions",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51fbc012-e53a-4d3c-be91-37f97942dbed",
+              "name": "Transactions list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b7e35b9d-5eee-4878-a7ca-96b670a9cbf4",
+      "name": "User Preferences",
+      "description": {
+        "content": "User account preferences and metadata",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c8c2a61-baf4-465e-9a05-9cc709348d71",
+          "name": "Get the authenticated user preferences",
+          "request": {
+            "name": "Get the authenticated user preferences",
+            "description": {},
+            "url": {
+              "path": [
+                "userPreference"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afef5bb1-8128-45bb-955d-d060c09f123e",
+              "name": "User preferences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userPreference"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/trader/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c6ed6453-4b82-4f39-b18f-2f5516300ec6",
+    "name": "Charles Schwab Trader API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for accessing Charles Schwab retail brokerage accounts. Applications can list linked accounts, retrieve balances and positions, place and cancel equity and option orders, and read order and transaction history. Authentication uses OAuth 2.0 with three-legged authorization code flow; access tokens expire after 30 minutes and refresh tokens after 7 days.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

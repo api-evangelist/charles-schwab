@@ -1,0 +1,252 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Charles Schwab Trader API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.schwabapi.com/v1/oauth/authorize",
+      "accessTokenUrl": "https://api.schwabapi.com/v1/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List linked account numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/accountNumbers"
+          },
+          "docs": "Returns the list of encrypted account identifiers linked to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "List accounts with balances and positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Optional fields to include, e.g. positions."
+              }
+            ]
+          },
+          "docs": "Returns brokerage accounts with optional positions and balances."
+        },
+        {
+          "info": {
+            "name": "Get account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get account details"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List orders for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber/orders",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fromEnteredTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toEnteredTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List orders for an account"
+        },
+        {
+          "info": {
+            "name": "Place a new order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber/orders",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Place a new order"
+        },
+        {
+          "info": {
+            "name": "Get a specific order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber/orders/:orderId",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific order"
+        },
+        {
+          "info": {
+            "name": "Cancel an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber/orders/:orderId",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel an order"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/accounts/:accountNumber/transactions",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List account transactions"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the authenticated user preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/trader/v1/userPreference"
+          },
+          "docs": "Get the authenticated user preferences"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
