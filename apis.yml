@@ -85,7 +85,7 @@ common:
   url: https://developer.schwab.com/user-guides
 - type: Authentication
   url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
-- type: SignUp
+- type: Signup
   url: https://developer.schwab.com/register
 - type: Dashboard
   url: https://developer.schwab.com/dashboard
@@ -103,7 +103,7 @@ common:
   url: json-schema/charles-schwab-order-schema.json
 - type: JSONSchema
   url: json-schema/charles-schwab-quote-schema.json
-- type: LLMsTxt
+- type: LlmsText
   url: https://developer.schwab.com/llms.txt
 maintainers:
 - FN: Kin Lane
