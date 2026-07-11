@@ -75,6 +75,12 @@ apis:
   - type: OpenAPI
     url: openapi/charles-schwab-market-data-api-openapi.yml
 common:
+- type: VulnerabilityDisclosure
+  url: security/charles-schwab-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/charles-schwab-domain-security.yml
+- type: Authentication
+  url: authentication/charles-schwab-authentication.yml
 - type: OAuthScopes
   url: scopes/charles-schwab-scopes.yml
 - type: LinkedIn

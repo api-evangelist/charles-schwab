@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/charles-schwab-market-data-api-openapi.yml, openapi/charles-schwab-trader-api-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.schwabapi.com/v1/oauth/authorize
+    tokenUrl: https://api.schwabapi.com/v1/oauth/token
+    scopes: 1
+  sources:
+  - openapi/charles-schwab-market-data-api-openapi.yml
+  - openapi/charles-schwab-trader-api-openapi.yml
