@@ -75,6 +75,8 @@ apis:
   - type: OpenAPI
     url: openapi/charles-schwab-market-data-api-openapi.yml
 common:
+- type: OAuthScopes
+  url: scopes/charles-schwab-scopes.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/charles-schwab
 - type: Website
