@@ -75,6 +75,8 @@ apis:
   - type: OpenAPI
     url: openapi/charles-schwab-market-data-api-openapi.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/charles-schwab-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/charles-schwab-vulnerability-disclosure.yml
 - type: DomainSecurity
