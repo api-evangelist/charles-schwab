@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Charles Schwab Market Data Accounts Market Hours API
+  description: REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.
+  version: '1.0'
+  contact:
+    name: Schwab Developer Support
+    url: https://developer.schwab.com/contact-us
+servers:
+- url: https://api.schwabapi.com/marketdata/v1
+  description: Schwab Market Data Production
+security:
+- oauth2: []
+tags:
+- name: Market Hours
+  description: Market hours by product
+paths:
+  /markets:
+    get:
+      operationId: getMarketHours
+      summary: Get market hours for one or more markets
+      tags:
+      - Market Hours
+      parameters:
+      - name: markets
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Market hours
+  /markets/{market_id}:
+    get:
+      operationId: getMarketHoursForMarket
+      summary: Get market hours for a single market
+      tags:
+      - Market Hours
+      parameters:
+      - name: market_id
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - equity
+          - option
+          - bond
+          - future
+          - forex
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Market hours
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.schwabapi.com/v1/oauth/authorize
+          tokenUrl: https://api.schwabapi.com/v1/oauth/token
+          scopes:
+            api: Access Schwab Trader and Market Data APIs
+externalDocs:
+  description: Schwab Market Data API Documentation
+  url: https://developer.schwab.com/products/trader-api--individual

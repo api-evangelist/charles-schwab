@@ -1,0 +1,218 @@
+openapi: 3.1.0
+info:
+  title: Charles Schwab Market Data Accounts Orders API
+  description: REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.
+  version: '1.0'
+  contact:
+    name: Schwab Developer Support
+    url: https://developer.schwab.com/contact-us
+servers:
+- url: https://api.schwabapi.com/marketdata/v1
+  description: Schwab Market Data Production
+security:
+- oauth2: []
+tags:
+- name: Orders
+  description: Place, retrieve, and cancel orders
+paths:
+  /accounts/{accountNumber}/orders:
+    get:
+      operationId: listOrdersByAccount
+      summary: List orders for an account
+      tags:
+      - Orders
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fromEnteredTime
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: toEnteredTime
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: status
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Orders list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      operationId: placeOrder
+      summary: Place a new order
+      tags:
+      - Orders
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Order accepted
+  /accounts/{accountNumber}/orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Get a specific order
+      tags:
+      - Orders
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    delete:
+      operationId: cancelOrder
+      summary: Cancel an order
+      tags:
+      - Orders
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order canceled
+components:
+  schemas:
+    Order:
+      type: object
+      required:
+      - orderType
+      - session
+      - duration
+      - orderStrategyType
+      properties:
+        orderId:
+          type: string
+        session:
+          type: string
+          enum:
+          - NORMAL
+          - AM
+          - PM
+          - SEAMLESS
+        duration:
+          type: string
+          enum:
+          - DAY
+          - GOOD_TILL_CANCEL
+          - FILL_OR_KILL
+        orderType:
+          type: string
+          enum:
+          - MARKET
+          - LIMIT
+          - STOP
+          - STOP_LIMIT
+          - TRAILING_STOP
+        complexOrderStrategyType:
+          type: string
+        quantity:
+          type: number
+        filledQuantity:
+          type: number
+        remainingQuantity:
+          type: number
+        requestedDestination:
+          type: string
+        orderStrategyType:
+          type: string
+        status:
+          type: string
+        enteredTime:
+          type: string
+          format: date-time
+        closeTime:
+          type: string
+          format: date-time
+        orderLegCollection:
+          type: array
+          items:
+            type: object
+            properties:
+              orderLegType:
+                type: string
+              instruction:
+                type: string
+                enum:
+                - BUY
+                - SELL
+                - BUY_TO_OPEN
+                - SELL_TO_CLOSE
+                - SELL_SHORT
+                - BUY_TO_COVER
+              quantity:
+                type: number
+              instrument:
+                $ref: '#/components/schemas/Instrument'
+    Instrument:
+      type: object
+      properties:
+        symbol:
+          type: string
+        cusip:
+          type: string
+        description:
+          type: string
+        assetType:
+          type: string
+          enum:
+          - EQUITY
+          - OPTION
+          - INDEX
+          - MUTUAL_FUND
+          - FIXED_INCOME
+          - CURRENCY
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.schwabapi.com/v1/oauth/authorize
+          tokenUrl: https://api.schwabapi.com/v1/oauth/token
+          scopes:
+            api: Access Schwab Trader and Market Data APIs
+externalDocs:
+  description: Schwab Market Data API Documentation
+  url: https://developer.schwab.com/products/trader-api--individual

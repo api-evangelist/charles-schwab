@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Charles Schwab Market Data Accounts API
+  description: REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.
+  version: '1.0'
+  contact:
+    name: Schwab Developer Support
+    url: https://developer.schwab.com/contact-us
+servers:
+- url: https://api.schwabapi.com/marketdata/v1
+  description: Schwab Market Data Production
+security:
+- oauth2: []
+tags:
+- name: Accounts
+  description: Linked brokerage accounts, balances, and positions
+paths:
+  /accounts/accountNumbers:
+    get:
+      operationId: listAccountNumbers
+      summary: List linked account numbers
+      description: Returns the list of encrypted account identifiers linked to the authenticated user.
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: List of linked accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    accountNumber:
+                      type: string
+                    hashValue:
+                      type: string
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List accounts with balances and positions
+      description: Returns brokerage accounts with optional positions and balances.
+      tags:
+      - Accounts
+      parameters:
+      - name: fields
+        in: query
+        schema:
+          type: string
+        description: Optional fields to include, e.g. positions.
+      responses:
+        '200':
+          description: Account list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  /accounts/{accountNumber}:
+    get:
+      operationId: getAccount
+      summary: Get account details
+      tags:
+      - Accounts
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        type:
+          type: string
+        roundTrips:
+          type: integer
+        isDayTrader:
+          type: boolean
+        isClosingOnlyRestricted:
+          type: boolean
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+        currentBalances:
+          $ref: '#/components/schemas/Balances'
+    Instrument:
+      type: object
+      properties:
+        symbol:
+          type: string
+        cusip:
+          type: string
+        description:
+          type: string
+        assetType:
+          type: string
+          enum:
+          - EQUITY
+          - OPTION
+          - INDEX
+          - MUTUAL_FUND
+          - FIXED_INCOME
+          - CURRENCY
+    Balances:
+      type: object
+      properties:
+        cashBalance:
+          type: number
+        liquidationValue:
+          type: number
+        availableFunds:
+          type: number
+        buyingPower:
+          type: number
+    Position:
+      type: object
+      properties:
+        instrument:
+          $ref: '#/components/schemas/Instrument'
+        longQuantity:
+          type: number
+        shortQuantity:
+          type: number
+        marketValue:
+          type: number
+        averagePrice:
+          type: number
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.schwabapi.com/v1/oauth/authorize
+          tokenUrl: https://api.schwabapi.com/v1/oauth/token
+          scopes:
+            api: Access Schwab Trader and Market Data APIs
+externalDocs:
+  description: Schwab Market Data API Documentation
+  url: https://developer.schwab.com/products/trader-api--individual
