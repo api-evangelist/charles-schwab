@@ -6,7 +6,20 @@ description: Charles Schwab is a financial services company providing brokerage,
   applications access account balances, positions, and orders, place equity and option
   trades, and consume real-time and historical market data through OAuth 2.0-secured
   REST endpoints.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/charles-schwab.png
 url: https://raw.githubusercontent.com/api-evangelist/charles-schwab/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
@@ -26,54 +39,206 @@ created: '2026-03-21'
 modified: '2026-05-19'
 specificationVersion: '0.20'
 apis:
-- aid: charles-schwab:trader-api
-  name: Charles Schwab Trader API
-  description: The Schwab Trader API provides authenticated access to retail brokerage
-    accounts. Applications can list linked accounts, retrieve balances and positions,
-    fetch and cancel orders, place new orders for equities and options, retrieve transactions,
-    and stream account activity.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: charles-schwab:charles-schwab-accounts-api
+  name: Charles Schwab Accounts API
+  description: Linked brokerage accounts, balances, and positions
   humanURL: https://developer.schwab.com/products/trader-api--individual
   baseURL: https://api.schwabapi.com/trader/v1
   tags:
   - Accounts
-  - Brokerage
-  - Orders
-  - Trading
-  - Transactions
   properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-accounts-api-openapi.yml
   - type: Documentation
     url: https://developer.schwab.com/products/trader-api--individual
   - type: GettingStarted
     url: https://developer.schwab.com/user-guides/get-started
   - type: Authentication
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
-  - type: OpenAPI
-    url: openapi/charles-schwab-trader-api-openapi.yml
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - url: graphql/charles-schwab-graphql.md
-    type: GraphQL
-- aid: charles-schwab:market-data-api
-  name: Charles Schwab Market Data API
-  description: The Schwab Market Data API exposes real-time and historical quotes,
-    option chains, price history, market hours, instrument metadata, and daily movers
-    for the major US indices, supporting market analytics and trading decision tools.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-instruments-api
+  name: Charles Schwab Instruments API
+  description: Instrument metadata search
   humanURL: https://developer.schwab.com/products/trader-api--individual
-  baseURL: https://api.schwabapi.com/marketdata/v1
+  baseURL: https://api.schwabapi.com/trader/v1
   tags:
-  - Equities
-  - Market Data
-  - Options
-  - Quotes
+  - Instruments
   properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-instruments-api-openapi.yml
   - type: Documentation
     url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
   - type: Authentication
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-market-hours-api
+  name: Charles Schwab Market Hours API
+  description: Market hours by product
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Market Hours
+  properties:
   - type: OpenAPI
-    url: openapi/charles-schwab-market-data-api-openapi.yml
+    url: openapi/charles-schwab-market-hours-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-movers-api
+  name: Charles Schwab Movers API
+  description: Top movers within indexes
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Movers
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-movers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-options-api
+  name: Charles Schwab Options API
+  description: Option chain and expiration data
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Options
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-options-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-orders-api
+  name: Charles Schwab Orders API
+  description: Place, retrieve, and cancel orders
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-price-history-api
+  name: Charles Schwab Price History API
+  description: Historical price candles
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Price History
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-price-history-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-quotes-api
+  name: Charles Schwab Quotes API
+  description: Real-time and delayed quote data
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-transactions-api
+  name: Charles Schwab Transactions API
+  description: Account transaction history
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
+- aid: charles-schwab:charles-schwab-user-preferences-api
+  name: Charles Schwab User Preferences API
+  description: User account preferences and metadata
+  humanURL: https://developer.schwab.com/products/trader-api--individual
+  baseURL: https://api.schwabapi.com/trader/v1
+  tags:
+  - User Preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/charles-schwab-user-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://developer.schwab.com/products/trader-api--individual
+  - type: GettingStarted
+    url: https://developer.schwab.com/user-guides/get-started
+  - type: Authentication
+    url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
+  - type: Spectral
+    url: spectral/charles-schwab-spectral.yml
+  - type: GraphQL
+    url: graphql/charles-schwab-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/charles-schwab-agentic-access.yml
