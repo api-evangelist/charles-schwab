@@ -1,0 +1,32 @@
+{
+  "provider": "charles-schwab",
+  "sources": [
+    "charles-schwab-accounts-api-openapi.yml",
+    "charles-schwab-instruments-api-openapi.yml",
+    "charles-schwab-market-hours-api-openapi.yml",
+    "charles-schwab-movers-api-openapi.yml",
+    "charles-schwab-options-api-openapi.yml",
+    "charles-schwab-orders-api-openapi.yml",
+    "charles-schwab-price-history-api-openapi.yml",
+    "charles-schwab-quotes-api-openapi.yml",
+    "charles-schwab-transactions-api-openapi.yml",
+    "charles-schwab-user-preferences-api-openapi.yml"
+  ],
+  "outputs": [
+    "charles-schwab-accounts-api-openapi.yml",
+    "charles-schwab-instruments-api-openapi.yml",
+    "charles-schwab-market-hours-api-openapi.yml",
+    "charles-schwab-movers-api-openapi.yml",
+    "charles-schwab-options-api-openapi.yml",
+    "charles-schwab-orders-api-openapi.yml",
+    "charles-schwab-price-history-api-openapi.yml",
+    "charles-schwab-quotes-api-openapi.yml",
+    "charles-schwab-transactions-api-openapi.yml",
+    "charles-schwab-user-preferences-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

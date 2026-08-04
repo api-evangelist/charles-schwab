@@ -1,0 +1,350 @@
+openapi: 3.1.0
+info:
+  title: Charles Schwab Trader API
+  description: >-
+    REST API for accessing Charles Schwab retail brokerage accounts.
+    Applications can list linked accounts, retrieve balances and positions,
+    place and cancel equity and option orders, and read order and transaction
+    history. Authentication uses OAuth 2.0 with three-legged authorization
+    code flow; access tokens expire after 30 minutes and refresh tokens
+    after 7 days.
+  version: '1.0'
+  contact:
+    name: Schwab Developer Support
+    url: https://developer.schwab.com/contact-us
+  termsOfService: https://developer.schwab.com/terms
+externalDocs:
+  description: Schwab Trader API Documentation
+  url: https://developer.schwab.com/products/trader-api--individual
+servers:
+  - url: https://api.schwabapi.com/trader/v1
+    description: Schwab Trader Production
+tags:
+  - name: Accounts
+    description: Linked brokerage accounts, balances, and positions
+  - name: Orders
+    description: Place, retrieve, and cancel orders
+  - name: Transactions
+    description: Account transaction history
+  - name: User Preferences
+    description: User account preferences and metadata
+security:
+  - oauth2: []
+paths:
+  /accounts/accountNumbers:
+    get:
+      operationId: listAccountNumbers
+      summary: List linked account numbers
+      description: Returns the list of encrypted account identifiers linked to the authenticated user.
+      tags:
+        - Accounts
+      responses:
+        '200':
+          description: List of linked accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    accountNumber:
+                      type: string
+                    hashValue:
+                      type: string
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List accounts with balances and positions
+      description: Returns brokerage accounts with optional positions and balances.
+      tags:
+        - Accounts
+      parameters:
+        - name: fields
+          in: query
+          schema:
+            type: string
+          description: Optional fields to include, e.g. positions.
+      responses:
+        '200':
+          description: Account list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  /accounts/{accountNumber}:
+    get:
+      operationId: getAccount
+      summary: Get account details
+      tags:
+        - Accounts
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+  /accounts/{accountNumber}/orders:
+    get:
+      operationId: listOrdersByAccount
+      summary: List orders for an account
+      tags:
+        - Orders
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fromEnteredTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toEnteredTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Orders list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      operationId: placeOrder
+      summary: Place a new order
+      tags:
+        - Orders
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Order accepted
+  /accounts/{accountNumber}/orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Get a specific order
+      tags:
+        - Orders
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    delete:
+      operationId: cancelOrder
+      summary: Cancel an order
+      tags:
+        - Orders
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order canceled
+  /accounts/{accountNumber}/transactions:
+    get:
+      operationId: listTransactions
+      summary: List account transactions
+      tags:
+        - Transactions
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: types
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transactions list
+  /userPreference:
+    get:
+      operationId: getUserPreference
+      summary: Get the authenticated user preferences
+      tags:
+        - User Preferences
+      responses:
+        '200':
+          description: User preferences
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.schwabapi.com/v1/oauth/authorize
+          tokenUrl: https://api.schwabapi.com/v1/oauth/token
+          scopes:
+            api: Access Schwab Trader and Market Data APIs
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        type:
+          type: string
+        roundTrips:
+          type: integer
+        isDayTrader:
+          type: boolean
+        isClosingOnlyRestricted:
+          type: boolean
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+        currentBalances:
+          $ref: '#/components/schemas/Balances'
+    Position:
+      type: object
+      properties:
+        instrument:
+          $ref: '#/components/schemas/Instrument'
+        longQuantity:
+          type: number
+        shortQuantity:
+          type: number
+        marketValue:
+          type: number
+        averagePrice:
+          type: number
+    Balances:
+      type: object
+      properties:
+        cashBalance:
+          type: number
+        liquidationValue:
+          type: number
+        availableFunds:
+          type: number
+        buyingPower:
+          type: number
+    Order:
+      type: object
+      required: [orderType, session, duration, orderStrategyType]
+      properties:
+        orderId:
+          type: string
+        session:
+          type: string
+          enum: [NORMAL, AM, PM, SEAMLESS]
+        duration:
+          type: string
+          enum: [DAY, GOOD_TILL_CANCEL, FILL_OR_KILL]
+        orderType:
+          type: string
+          enum: [MARKET, LIMIT, STOP, STOP_LIMIT, TRAILING_STOP]
+        complexOrderStrategyType:
+          type: string
+        quantity:
+          type: number
+        filledQuantity:
+          type: number
+        remainingQuantity:
+          type: number
+        requestedDestination:
+          type: string
+        orderStrategyType:
+          type: string
+        status:
+          type: string
+        enteredTime:
+          type: string
+          format: date-time
+        closeTime:
+          type: string
+          format: date-time
+        orderLegCollection:
+          type: array
+          items:
+            type: object
+            properties:
+              orderLegType:
+                type: string
+              instruction:
+                type: string
+                enum: [BUY, SELL, BUY_TO_OPEN, SELL_TO_CLOSE, SELL_SHORT, BUY_TO_COVER]
+              quantity:
+                type: number
+              instrument:
+                $ref: '#/components/schemas/Instrument'
+    Instrument:
+      type: object
+      properties:
+        symbol:
+          type: string
+        cusip:
+          type: string
+        description:
+          type: string
+        assetType:
+          type: string
+          enum: [EQUITY, OPTION, INDEX, MUTUAL_FUND, FIXED_INCOME, CURRENCY]
