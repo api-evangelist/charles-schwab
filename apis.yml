@@ -6,6 +6,18 @@ description: Charles Schwab is a financial services company providing brokerage,
   applications access account balances, positions, and orders, place equity and option
   trades, and consume real-time and historical market data through OAuth 2.0-secured
   REST endpoints.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-11'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
