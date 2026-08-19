@@ -1,0 +1,118 @@
+{
+  "item": [
+    {
+      "id": "48e2d589-8af6-47de-a01e-49cec3f7aec0",
+      "name": "User Preferences",
+      "description": {
+        "content": "User account preferences and metadata",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3199cc41-7129-406b-93fa-efc6a206acc1",
+          "name": "Get the authenticated user preferences",
+          "request": {
+            "name": "Get the authenticated user preferences",
+            "description": {},
+            "url": {
+              "path": [
+                "userPreference"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ba2e097-67b2-4823-a056-91f8219e98c2",
+              "name": "User preferences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "userPreference"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ad6570e0-2297-4637-a131-89642de2027a",
+    "name": "Charles Schwab Market Data Accounts User Preferences API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

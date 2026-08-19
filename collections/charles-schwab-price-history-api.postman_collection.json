@@ -1,0 +1,184 @@
+{
+  "item": [
+    {
+      "id": "497e8991-553c-4397-af02-e27870fac32a",
+      "name": "Price History",
+      "description": {
+        "content": "Historical price candles",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4ebd42bc-d98d-49d5-8460-098259b53cf0",
+          "name": "Get price history candles for a symbol",
+          "request": {
+            "name": "Get price history candles for a symbol",
+            "description": {},
+            "url": {
+              "path": [
+                "pricehistory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "periodType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "frequencyType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "frequency",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02f6f0f5-56f4-4ac6-9e7a-8e47b41652d9",
+              "name": "Candle history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pricehistory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "periodType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "frequencyType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frequency",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3de8c4d2-3fc7-4019-85d2-bf28ee382301",
+    "name": "Charles Schwab Market Data Accounts Price History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Charles Schwab Market Data Accounts Instruments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.schwabapi.com/v1/oauth/authorize",
+      "accessTokenUrl": "https://api.schwabapi.com/v1/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instruments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search instruments by symbol or CUSIP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/instruments",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "projection",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search instruments by symbol or CUSIP"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

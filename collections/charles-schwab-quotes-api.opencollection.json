@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Charles Schwab Market Data Accounts Quotes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.schwabapi.com/v1/oauth/authorize",
+      "accessTokenUrl": "https://api.schwabapi.com/v1/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get quotes for one or more symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/quotes",
+            "params": [
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of ticker symbols."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "indicative",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get quotes for one or more symbols"
+        },
+        {
+          "info": {
+            "name": "Get quote for a specific symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/:symbol_id/quotes",
+            "params": [
+              {
+                "name": "symbol_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get quote for a specific symbol"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Charles Schwab Market Data Accounts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.schwabapi.com/v1/oauth/authorize",
+      "accessTokenUrl": "https://api.schwabapi.com/v1/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List linked account numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/accounts/accountNumbers"
+          },
+          "docs": "Returns the list of encrypted account identifiers linked to the authenticated user."
+        },
+        {
+          "info": {
+            "name": "List accounts with balances and positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/accounts",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Optional fields to include, e.g. positions."
+              }
+            ]
+          },
+          "docs": "Returns brokerage accounts with optional positions and balances."
+        },
+        {
+          "info": {
+            "name": "Get account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.schwabapi.com/marketdata/v1/accounts/:accountNumber",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get account details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

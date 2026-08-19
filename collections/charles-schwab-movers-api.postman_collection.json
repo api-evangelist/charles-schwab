@@ -1,0 +1,156 @@
+{
+  "item": [
+    {
+      "id": "2af65dea-6711-4645-bca4-f7441d797125",
+      "name": "Movers",
+      "description": {
+        "content": "Top movers within indexes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a80e9c25-6174-4b58-ab03-f9af0644106c",
+          "name": "Get top movers for an index",
+          "request": {
+            "name": "Get top movers for an index",
+            "description": {},
+            "url": {
+              "path": [
+                "movers",
+                ":symbol_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "frequency",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol_id",
+                  "description": "(Required) Index symbol such as $DJI, $COMPX, or $SPX."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed79d173-d773-4691-8a1b-5d10680a5596",
+              "name": "Movers list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "movers",
+                    ":symbol_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "frequency",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol_id",
+                      "description": "(Required) Index symbol such as $DJI, $COMPX, or $SPX."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8b0cfb73-5a8f-4a67-ad83-532aca67c6af",
+    "name": "Charles Schwab Market Data Accounts Movers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

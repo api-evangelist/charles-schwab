@@ -1,0 +1,327 @@
+{
+  "item": [
+    {
+      "id": "f615fb86-296d-421a-9b47-39c99de043b2",
+      "name": "Accounts",
+      "description": {
+        "content": "Linked brokerage accounts, balances, and positions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "de578b96-f1be-43dd-823a-7d3570b5b0f4",
+          "name": "List linked account numbers",
+          "request": {
+            "name": "List linked account numbers",
+            "description": {
+              "content": "Returns the list of encrypted account identifiers linked to the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                "accountNumbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a4bbe1a0-0f4c-49a2-bb6f-f4c7d773f3eb",
+              "name": "List of linked accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "accountNumbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountNumber\": \"string\",\n    \"hashValue\": \"string\"\n  },\n  {\n    \"accountNumber\": \"string\",\n    \"hashValue\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56a2544c-a4ad-4a54-9c26-bf79b73be5e8",
+          "name": "List accounts with balances and positions",
+          "request": {
+            "name": "List accounts with balances and positions",
+            "description": {
+              "content": "Returns brokerage accounts with optional positions and balances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Optional fields to include, e.g. positions."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "858da1f7-fc68-4985-9d54-40f6834e70ea",
+              "name": "Account list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountNumber\": \"string\",\n    \"type\": \"string\",\n    \"roundTrips\": 8590,\n    \"isDayTrader\": false,\n    \"isClosingOnlyRestricted\": true,\n    \"positions\": [\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"FIXED_INCOME\"\n        },\n        \"longQuantity\": 1223.0394953310597,\n        \"shortQuantity\": 5144.65310026878,\n        \"marketValue\": 5549.954793820102,\n        \"averagePrice\": 3916.399452508007\n      },\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"OPTION\"\n        },\n        \"longQuantity\": 7665.557628868272,\n        \"shortQuantity\": 7166.581605305221,\n        \"marketValue\": 9558.533225081374,\n        \"averagePrice\": 3289.754059937613\n      }\n    ],\n    \"currentBalances\": {\n      \"cashBalance\": 6206.040436846354,\n      \"liquidationValue\": 6556.116232226702,\n      \"availableFunds\": 9330.434508767396,\n      \"buyingPower\": 3678.0831578275984\n    }\n  },\n  {\n    \"accountNumber\": \"string\",\n    \"type\": \"string\",\n    \"roundTrips\": 9343,\n    \"isDayTrader\": true,\n    \"isClosingOnlyRestricted\": false,\n    \"positions\": [\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"FIXED_INCOME\"\n        },\n        \"longQuantity\": 6008.335503338211,\n        \"shortQuantity\": 9067.467764512347,\n        \"marketValue\": 1503.2314109566992,\n        \"averagePrice\": 270.39724575515623\n      },\n      {\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"EQUITY\"\n        },\n        \"longQuantity\": 587.2053466883309,\n        \"shortQuantity\": 3403.216706502977,\n        \"marketValue\": 9077.30981575218,\n        \"averagePrice\": 4914.282137482925\n      }\n    ],\n    \"currentBalances\": {\n      \"cashBalance\": 8845.684578503127,\n      \"liquidationValue\": 9692.999743798879,\n      \"availableFunds\": 9235.925895798411,\n      \"buyingPower\": 376.71436244112397\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "982b9c2a-a2b2-486d-bf7c-ce8865b54aeb",
+          "name": "Get account details",
+          "request": {
+            "name": "Get account details",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e6e57b7-824b-43d1-8b24-11d99693eb03",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountNumber\": \"string\",\n  \"type\": \"string\",\n  \"roundTrips\": 4939,\n  \"isDayTrader\": true,\n  \"isClosingOnlyRestricted\": true,\n  \"positions\": [\n    {\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"EQUITY\"\n      },\n      \"longQuantity\": 5991.081732062614,\n      \"shortQuantity\": 1834.0869993133513,\n      \"marketValue\": 1065.8340667729915,\n      \"averagePrice\": 4269.750333939808\n    },\n    {\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"CURRENCY\"\n      },\n      \"longQuantity\": 7231.897984892901,\n      \"shortQuantity\": 9137.017875594925,\n      \"marketValue\": 9993.080083222958,\n      \"averagePrice\": 9172.472067574967\n    }\n  ],\n  \"currentBalances\": {\n    \"cashBalance\": 2641.040380480275,\n    \"liquidationValue\": 2779.700429199842,\n    \"availableFunds\": 3140.1756467312325,\n    \"buyingPower\": 7169.353591855612\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4f1ce1e0-b8f8-4173-b546-bfb6886b8270",
+    "name": "Charles Schwab Market Data Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

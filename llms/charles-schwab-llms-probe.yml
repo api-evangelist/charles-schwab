@@ -1,0 +1,18 @@
+# Negative probe result — recorded deliberately.
+#
+# roadmap#27: `llms_txt_published` credited a DECLARED pointer wherever no llms/
+# artifact existed. This file IS that artifact. It makes repo_has?(slug,'llms')
+# true so the unprobed-pointer fallback stops firing, while carrying no .txt so
+# llms_txt_present? stays false. The check therefore returns a TRUE zero, backed
+# by a fetched URL and a status code, instead of a false credit.
+#
+# Same posture as the well-known probe artifacts: a recorded absence is a valid
+# measurement. Do not delete this to 'clean up' — deleting it restores the bug.
+llms:
+  probed: '2026-08-17'
+  url: https://developer.schwab.com/llms.txt
+  verdict: unreachable
+  published: false
+  detail: HTTPError
+  note: >-
+    The declared URL could not be fetched.

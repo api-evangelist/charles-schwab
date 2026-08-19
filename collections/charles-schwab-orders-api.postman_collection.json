@@ -1,0 +1,497 @@
+{
+  "item": [
+    {
+      "id": "15572a6f-3397-4af9-a67c-7e90842e39c3",
+      "name": "Orders",
+      "description": {
+        "content": "Place, retrieve, and cancel orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da03ae77-8623-4860-980d-d68cd41e4a30",
+          "name": "List orders for an account",
+          "request": {
+            "name": "List orders for an account",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromEnteredTime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toEnteredTime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ad2ed06-1da6-40f3-a035-10d036fa9036",
+              "name": "Orders list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromEnteredTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "toEnteredTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderType\": \"TRAILING_STOP\",\n    \"session\": \"NORMAL\",\n    \"duration\": \"GOOD_TILL_CANCEL\",\n    \"orderStrategyType\": \"string\",\n    \"orderId\": \"string\",\n    \"complexOrderStrategyType\": \"string\",\n    \"quantity\": 7234.334803932912,\n    \"filledQuantity\": 4598.666748129503,\n    \"remainingQuantity\": 520.3737380867024,\n    \"requestedDestination\": \"string\",\n    \"status\": \"string\",\n    \"enteredTime\": \"1966-01-22T22:42:37.898Z\",\n    \"closeTime\": \"2019-05-11T20:45:18.742Z\",\n    \"orderLegCollection\": [\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY\",\n        \"quantity\": 2939.132706253058,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"MUTUAL_FUND\"\n        }\n      },\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY\",\n        \"quantity\": 7854.423451650142,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"FIXED_INCOME\"\n        }\n      }\n    ]\n  },\n  {\n    \"orderType\": \"TRAILING_STOP\",\n    \"session\": \"SEAMLESS\",\n    \"duration\": \"FILL_OR_KILL\",\n    \"orderStrategyType\": \"string\",\n    \"orderId\": \"string\",\n    \"complexOrderStrategyType\": \"string\",\n    \"quantity\": 55.2956827975537,\n    \"filledQuantity\": 4545.7803755694795,\n    \"remainingQuantity\": 9925.374210077298,\n    \"requestedDestination\": \"string\",\n    \"status\": \"string\",\n    \"enteredTime\": \"1989-01-13T18:31:02.377Z\",\n    \"closeTime\": \"1994-07-17T01:59:42.429Z\",\n    \"orderLegCollection\": [\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY_TO_COVER\",\n        \"quantity\": 6016.415562340024,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"OPTION\"\n        }\n      },\n      {\n        \"orderLegType\": \"string\",\n        \"instruction\": \"BUY_TO_COVER\",\n        \"quantity\": 6764.651685807702,\n        \"instrument\": {\n          \"symbol\": \"string\",\n          \"cusip\": \"string\",\n          \"description\": \"string\",\n          \"assetType\": \"MUTUAL_FUND\"\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44f47163-8440-4f6a-9ecc-f857896b1c9c",
+          "name": "Place a new order",
+          "request": {
+            "name": "Place a new order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderType\": \"<string>\",\n  \"session\": \"<string>\",\n  \"duration\": \"<string>\",\n  \"orderStrategyType\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"complexOrderStrategyType\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"filledQuantity\": \"<number>\",\n  \"remainingQuantity\": \"<number>\",\n  \"requestedDestination\": \"<string>\",\n  \"status\": \"<string>\",\n  \"enteredTime\": \"<dateTime>\",\n  \"closeTime\": \"<dateTime>\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"<string>\",\n        \"cusip\": \"<string>\",\n        \"description\": \"<string>\",\n        \"assetType\": \"<string>\"\n      }\n    },\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"<string>\",\n        \"cusip\": \"<string>\",\n        \"description\": \"<string>\",\n        \"assetType\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "59023e01-54e5-41b8-aba8-7d929441c2e8",
+              "name": "Order accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderType\": \"<string>\",\n  \"session\": \"<string>\",\n  \"duration\": \"<string>\",\n  \"orderStrategyType\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"complexOrderStrategyType\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"filledQuantity\": \"<number>\",\n  \"remainingQuantity\": \"<number>\",\n  \"requestedDestination\": \"<string>\",\n  \"status\": \"<string>\",\n  \"enteredTime\": \"<dateTime>\",\n  \"closeTime\": \"<dateTime>\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"EQUITY\"\n      }\n    },\n    {\n      \"orderLegType\": \"<string>\",\n      \"instruction\": \"<string>\",\n      \"quantity\": \"<number>\",\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"EQUITY\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cd9c4c5-1183-4658-bbb8-8337a8832c24",
+          "name": "Get a specific order",
+          "request": {
+            "name": "Get a specific order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1afeb856-44ec-4e47-9edf-cdf9bef26937",
+              "name": "Order details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderType\": \"STOP_LIMIT\",\n  \"session\": \"PM\",\n  \"duration\": \"GOOD_TILL_CANCEL\",\n  \"orderStrategyType\": \"string\",\n  \"orderId\": \"string\",\n  \"complexOrderStrategyType\": \"string\",\n  \"quantity\": 6490.772861423615,\n  \"filledQuantity\": 4949.713394973084,\n  \"remainingQuantity\": 2589.0450188997315,\n  \"requestedDestination\": \"string\",\n  \"status\": \"string\",\n  \"enteredTime\": \"1967-12-06T23:27:50.657Z\",\n  \"closeTime\": \"2010-05-18T10:24:25.122Z\",\n  \"orderLegCollection\": [\n    {\n      \"orderLegType\": \"string\",\n      \"instruction\": \"SELL_TO_CLOSE\",\n      \"quantity\": 1009.9105850444312,\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"INDEX\"\n      }\n    },\n    {\n      \"orderLegType\": \"string\",\n      \"instruction\": \"BUY_TO_OPEN\",\n      \"quantity\": 5478.447219521362,\n      \"instrument\": {\n        \"symbol\": \"string\",\n        \"cusip\": \"string\",\n        \"description\": \"string\",\n        \"assetType\": \"OPTION\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54cdd1d8-3df1-4cae-827f-1b292fab5552",
+          "name": "Cancel an order",
+          "request": {
+            "name": "Cancel an order",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":accountNumber",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountNumber",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82af358c-0f6e-4e25-99b2-39a114767ea0",
+              "name": "Order canceled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountNumber",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountNumber",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a374832b-6d3c-46b1-a8a9-a04cc4b11429",
+    "name": "Charles Schwab Market Data Accounts Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

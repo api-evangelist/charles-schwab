@@ -1,0 +1,262 @@
+{
+  "item": [
+    {
+      "id": "c07a771a-7f6a-46ed-aa67-888b6b0b3186",
+      "name": "Quotes",
+      "description": {
+        "content": "Real-time and delayed quote data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e904a39a-ba97-447e-969d-996e04daf3ee",
+          "name": "Get quotes for one or more symbols",
+          "request": {
+            "name": "Get quotes for one or more symbols",
+            "description": {},
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbols",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of ticker symbols."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "indicative",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e831ad7-5e3b-410e-8257-70df04069715",
+              "name": "Quote data keyed by symbol",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbols",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "indicative",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"symbol\": \"string\",\n    \"bidPrice\": 3611.2403646881307,\n    \"askPrice\": 9256.403987151638,\n    \"lastPrice\": 4508.2888530595055,\n    \"openPrice\": 5631.125229345262,\n    \"highPrice\": 4959.596086274772,\n    \"lowPrice\": 3269.955366630147,\n    \"netChange\": 7805.555526037504,\n    \"totalVolume\": 5445,\n    \"quoteTime\": 9441,\n    \"tradeTime\": 9991\n  },\n  \"key_1\": {\n    \"symbol\": \"string\",\n    \"bidPrice\": 5277.4208379857055,\n    \"askPrice\": 5967.862498220286,\n    \"lastPrice\": 9086.079487823308,\n    \"openPrice\": 7159.951892818164,\n    \"highPrice\": 5694.537451728258,\n    \"lowPrice\": 4974.193349678661,\n    \"netChange\": 2820.0650219296585,\n    \"totalVolume\": 3544,\n    \"quoteTime\": 9496,\n    \"tradeTime\": 9385\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e1ee627-00a9-4f26-973b-a8a48b6c2662",
+          "name": "Get quote for a specific symbol",
+          "request": {
+            "name": "Get quote for a specific symbol",
+            "description": {},
+            "url": {
+              "path": [
+                ":symbol_id",
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c537b772-d1b0-4a26-9082-b3d94d030982",
+              "name": "Quote",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":symbol_id",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"symbol\": \"string\",\n  \"bidPrice\": 112.71706078660348,\n  \"askPrice\": 9485.127829475065,\n  \"lastPrice\": 7039.530994300402,\n  \"openPrice\": 3164.496236763803,\n  \"highPrice\": 4368.669488578713,\n  \"lowPrice\": 4235.2727353151695,\n  \"netChange\": 5364.270512411614,\n  \"totalVolume\": 514,\n  \"quoteTime\": 3170,\n  \"tradeTime\": 214\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.schwabapi.com/marketdata/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "api"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5c4f66a6-bff7-4fb0-aa62-3f435e92dd09",
+    "name": "Charles Schwab Market Data Accounts Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
