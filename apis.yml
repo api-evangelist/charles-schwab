@@ -37,6 +37,17 @@ type: Index
 access: 3rd-Party
 position: Consumer
 tags:
+- Account
+- Banking
+- Brokerage
+- Financial-Services
+- Investing
+- Market Data
+- Authentication
+- Order
+- Trading
+- Fortune 500
+tags_raw:
 - Accounts
 - Banking
 - Brokerage
@@ -57,6 +68,8 @@ apis:
   humanURL: https://developer.schwab.com/products/trader-api--individual
   baseURL: https://api.schwabapi.com/trader/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -157,6 +170,8 @@ apis:
   humanURL: https://developer.schwab.com/products/trader-api--individual
   baseURL: https://api.schwabapi.com/trader/v1
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -217,6 +232,8 @@ apis:
   humanURL: https://developer.schwab.com/products/trader-api--individual
   baseURL: https://api.schwabapi.com/trader/v1
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
