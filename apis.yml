@@ -269,6 +269,9 @@ apis:
   - type: GraphQL
     url: graphql/charles-schwab-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/charles-schwab-capability-edges.yml
+  name: Charles Schwab Business Capability Map
 - type: AgenticAccess
   url: agentic-access/charles-schwab-agentic-access.yml
 - type: VulnerabilityDisclosure
