@@ -1,7 +1,9 @@
 ---
 title: What to Know About Artificial Intelligence (AI)
 url: https://www.schwab.com/learn/story/what-to-know-about-artificial-intelligence-ai
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Charles Schwab" press release artificial intelligence'
 position: 5
 source: serpapi-google

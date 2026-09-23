@@ -1,32 +1,40 @@
 {
   "provider": "charles-schwab",
   "sources": [
-    "charles-schwab-accounts-api-openapi.yml",
-    "charles-schwab-instruments-api-openapi.yml",
-    "charles-schwab-market-hours-api-openapi.yml",
-    "charles-schwab-movers-api-openapi.yml",
-    "charles-schwab-options-api-openapi.yml",
-    "charles-schwab-orders-api-openapi.yml",
-    "charles-schwab-price-history-api-openapi.yml",
-    "charles-schwab-quotes-api-openapi.yml",
-    "charles-schwab-transactions-api-openapi.yml",
-    "charles-schwab-user-preferences-api-openapi.yml"
+    "_original/charles-schwab-market-data-api-openapi.yml",
+    "_original/charles-schwab-trader-api-openapi.yml"
   ],
   "outputs": [
-    "charles-schwab-accounts-api-openapi.yml",
     "charles-schwab-instruments-api-openapi.yml",
     "charles-schwab-market-hours-api-openapi.yml",
     "charles-schwab-movers-api-openapi.yml",
     "charles-schwab-options-api-openapi.yml",
-    "charles-schwab-orders-api-openapi.yml",
     "charles-schwab-price-history-api-openapi.yml",
     "charles-schwab-quotes-api-openapi.yml",
+    "charles-schwab-accounts-api-openapi.yml",
+    "charles-schwab-orders-api-openapi.yml",
     "charles-schwab-transactions-api-openapi.yml",
     "charles-schwab-user-preferences-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "charles-schwab-market-data-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "charles-schwab-trader-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "charles-schwab-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-instruments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-market-hours-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-movers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-options-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-price-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-quotes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "charles-schwab-user-preferences-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

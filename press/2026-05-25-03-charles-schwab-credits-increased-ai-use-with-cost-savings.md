@@ -1,7 +1,9 @@
 ---
 title: Charles Schwab credits increased AI use with cost savings
 url: https://www.ciodive.com/news/charles-schwab-AI-cost-savings-knowledge-assistant/738188/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Charles Schwab" press release artificial intelligence'
 position: 3
 source: serpapi-google
