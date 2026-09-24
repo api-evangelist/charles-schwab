@@ -40,13 +40,14 @@ tags:
 - Account
 - Banking
 - Brokerage
-- Financial-Services
+- Financial Services
 - Investing
 - Market Data
 - Authentication
 - Order
 - Trading
 - Fortune 500
+- Wealth Management
 tags_raw:
 - Accounts
 - Banking
@@ -58,6 +59,8 @@ tags_raw:
 - Orders
 - Trading
 - Fortune 500
+- Financial-Services
+- Wealth Management
 created: '2026-03-21'
 modified: '2026-05-19'
 specificationVersion: '0.23'
@@ -82,8 +85,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-instruments-api
   name: Charles Schwab Instruments API
   description: Instrument metadata search
@@ -102,8 +103,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-market-hours-api
   name: Charles Schwab Market Hours API
   description: Market hours by product
@@ -122,8 +121,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-movers-api
   name: Charles Schwab Movers API
   description: Top movers within indexes
@@ -142,8 +139,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-options-api
   name: Charles Schwab Options API
   description: Option chain and expiration data
@@ -162,8 +157,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-orders-api
   name: Charles Schwab Orders API
   description: Place, retrieve, and cancel orders
@@ -184,8 +177,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-price-history-api
   name: Charles Schwab Price History API
   description: Historical price candles
@@ -204,8 +195,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-quotes-api
   name: Charles Schwab Quotes API
   description: Real-time and delayed quote data
@@ -224,8 +213,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-transactions-api
   name: Charles Schwab Transactions API
   description: Account transaction history
@@ -246,8 +233,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 - aid: charles-schwab:charles-schwab-user-preferences-api
   name: Charles Schwab User Preferences API
   description: User account preferences and metadata
@@ -266,8 +251,6 @@ apis:
     url: https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
-  - type: GraphQL
-    url: graphql/charles-schwab-graphql.md
 common:
 - type: CapabilityMap
   url: capabilities/charles-schwab-capability-edges.yml
