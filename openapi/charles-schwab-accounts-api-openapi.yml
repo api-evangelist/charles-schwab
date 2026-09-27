@@ -84,24 +84,25 @@ paths:
                 $ref: '#/components/schemas/Account'
 components:
   schemas:
-    Instrument:
+    Account:
       type: object
       properties:
-        symbol:
+        accountNumber:
           type: string
-        cusip:
+        type:
           type: string
-        description:
-          type: string
-        assetType:
-          type: string
-          enum:
-          - EQUITY
-          - OPTION
-          - INDEX
-          - MUTUAL_FUND
-          - FIXED_INCOME
-          - CURRENCY
+        roundTrips:
+          type: integer
+        isDayTrader:
+          type: boolean
+        isClosingOnlyRestricted:
+          type: boolean
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+        currentBalances:
+          $ref: '#/components/schemas/Balances'
     Balances:
       type: object
       properties:
@@ -126,25 +127,24 @@ components:
           type: number
         averagePrice:
           type: number
-    Account:
+    Instrument:
       type: object
       properties:
-        accountNumber:
+        symbol:
           type: string
-        type:
+        cusip:
           type: string
-        roundTrips:
-          type: integer
-        isDayTrader:
-          type: boolean
-        isClosingOnlyRestricted:
-          type: boolean
-        positions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Position'
-        currentBalances:
-          $ref: '#/components/schemas/Balances'
+        description:
+          type: string
+        assetType:
+          type: string
+          enum:
+          - EQUITY
+          - OPTION
+          - INDEX
+          - MUTUAL_FUND
+          - FIXED_INCOME
+          - CURRENCY
   securitySchemes:
     oauth2:
       type: oauth2

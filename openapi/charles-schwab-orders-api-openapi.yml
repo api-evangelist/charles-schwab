@@ -116,24 +116,6 @@ paths:
           description: Order canceled
 components:
   schemas:
-    Instrument:
-      type: object
-      properties:
-        symbol:
-          type: string
-        cusip:
-          type: string
-        description:
-          type: string
-        assetType:
-          type: string
-          enum:
-          - EQUITY
-          - OPTION
-          - INDEX
-          - MUTUAL_FUND
-          - FIXED_INCOME
-          - CURRENCY
     Order:
       type: object
       required:
@@ -205,6 +187,24 @@ components:
                 type: number
               instrument:
                 $ref: '#/components/schemas/Instrument'
+    Instrument:
+      type: object
+      properties:
+        symbol:
+          type: string
+        cusip:
+          type: string
+        description:
+          type: string
+        assetType:
+          type: string
+          enum:
+          - EQUITY
+          - OPTION
+          - INDEX
+          - MUTUAL_FUND
+          - FIXED_INCOME
+          - CURRENCY
   securitySchemes:
     oauth2:
       type: oauth2
