@@ -84,25 +84,6 @@ paths:
                 $ref: '#/components/schemas/Account'
 components:
   schemas:
-    Account:
-      type: object
-      properties:
-        accountNumber:
-          type: string
-        type:
-          type: string
-        roundTrips:
-          type: integer
-        isDayTrader:
-          type: boolean
-        isClosingOnlyRestricted:
-          type: boolean
-        positions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Position'
-        currentBalances:
-          $ref: '#/components/schemas/Balances'
     Balances:
       type: object
       properties:
@@ -113,19 +94,6 @@ components:
         availableFunds:
           type: number
         buyingPower:
-          type: number
-    Position:
-      type: object
-      properties:
-        instrument:
-          $ref: '#/components/schemas/Instrument'
-        longQuantity:
-          type: number
-        shortQuantity:
-          type: number
-        marketValue:
-          type: number
-        averagePrice:
           type: number
     Instrument:
       type: object
@@ -145,6 +113,38 @@ components:
           - MUTUAL_FUND
           - FIXED_INCOME
           - CURRENCY
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        type:
+          type: string
+        roundTrips:
+          type: integer
+        isDayTrader:
+          type: boolean
+        isClosingOnlyRestricted:
+          type: boolean
+        positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+        currentBalances:
+          $ref: '#/components/schemas/Balances'
+    Position:
+      type: object
+      properties:
+        instrument:
+          $ref: '#/components/schemas/Instrument'
+        longQuantity:
+          type: number
+        shortQuantity:
+          type: number
+        marketValue:
+          type: number
+        averagePrice:
+          type: number
   securitySchemes:
     oauth2:
       type: oauth2
