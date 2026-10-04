@@ -84,17 +84,6 @@ paths:
                 $ref: '#/components/schemas/Account'
 components:
   schemas:
-    Balances:
-      type: object
-      properties:
-        cashBalance:
-          type: number
-        liquidationValue:
-          type: number
-        availableFunds:
-          type: number
-        buyingPower:
-          type: number
     Instrument:
       type: object
       properties:
@@ -113,6 +102,19 @@ components:
           - MUTUAL_FUND
           - FIXED_INCOME
           - CURRENCY
+    Position:
+      type: object
+      properties:
+        instrument:
+          $ref: '#/components/schemas/Instrument'
+        longQuantity:
+          type: number
+        shortQuantity:
+          type: number
+        marketValue:
+          type: number
+        averagePrice:
+          type: number
     Account:
       type: object
       properties:
@@ -132,18 +134,16 @@ components:
             $ref: '#/components/schemas/Position'
         currentBalances:
           $ref: '#/components/schemas/Balances'
-    Position:
+    Balances:
       type: object
       properties:
-        instrument:
-          $ref: '#/components/schemas/Instrument'
-        longQuantity:
+        cashBalance:
           type: number
-        shortQuantity:
+        liquidationValue:
           type: number
-        marketValue:
+        availableFunds:
           type: number
-        averagePrice:
+        buyingPower:
           type: number
   securitySchemes:
     oauth2:
