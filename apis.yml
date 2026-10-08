@@ -252,6 +252,12 @@ apis:
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
 common:
+- type: Plans
+  url: plans/charles-schwab-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/charles-schwab-rate-limits.yml
+- type: FinOps
+  url: finops/charles-schwab-finops.yml
 - type: CapabilityMap
   url: capabilities/charles-schwab-capability-edges.yml
   name: Charles Schwab Business Capability Map
