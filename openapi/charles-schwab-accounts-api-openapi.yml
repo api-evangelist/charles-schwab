@@ -102,19 +102,6 @@ components:
           - MUTUAL_FUND
           - FIXED_INCOME
           - CURRENCY
-    Position:
-      type: object
-      properties:
-        instrument:
-          $ref: '#/components/schemas/Instrument'
-        longQuantity:
-          type: number
-        shortQuantity:
-          type: number
-        marketValue:
-          type: number
-        averagePrice:
-          type: number
     Account:
       type: object
       properties:
@@ -144,6 +131,19 @@ components:
         availableFunds:
           type: number
         buyingPower:
+          type: number
+    Position:
+      type: object
+      properties:
+        instrument:
+          $ref: '#/components/schemas/Instrument'
+        longQuantity:
+          type: number
+        shortQuantity:
+          type: number
+        marketValue:
+          type: number
+        averagePrice:
           type: number
   securitySchemes:
     oauth2:
