@@ -11,35 +11,12 @@ checked:
 - https://n8n.io/integrations/charles-schwab/
 - https://registry.financialdataexchange.org/
 - https://reports.adviserinfo.sec.gov/reports/CompilationReports/IA_FIRM_SEC_Feed_10_17_2026.xml.gz
+- https://reports.adviserinfo.sec.gov/reports/CompilationReports/IA_FIRM_SEC_Feed_10_19_2026.xml.gz
 - https://www.wealthbox.com/wp-json/wp/v2/integrations?per_page=100&page=1
 - https://zapier.com/apps/charles-schwab/integrations
 summary: null
 marketplace_apps: []
 edges:
-- partner_name: FDX (Financial Data Exchange)
-  partner: fdx
-  type: contract
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://registry.financialdataexchange.org/
-  contract_reference:
-    register: FDX Registry
-    standard: FDX API
-    spec_file: null
-    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
-    role: data-provider
-    member_type: MEMBER
-    registered_name: Charles Schwab
-    register_id: 129
-    registered_website: https://www.schwab.com
-    country: United States
-    fdx_version: null
-    matched_by: domain:schwab.com
-    detected_by: sweep-fdx.py
-    detected: '2026-10-14'
-  detected_by: sweep-fdx.py
-  first_seen: '2026-10-14'
 - partner_name: SEC (investment adviser registration)
   partner: null
   partner_match: register
@@ -73,4 +50,28 @@ edges:
     - CHARLES SCHWAB & CO., INC. (CRD 5393)
   detected_by: sweep-asset-management.py
   first_seen: '2026-10-18'
+- partner_name: FDX (Financial Data Exchange)
+  partner: fdx
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.financialdataexchange.org/
+  contract_reference:
+    register: FDX Registry
+    standard: FDX API
+    spec_file: null
+    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
+    role: data-provider
+    member_type: MEMBER
+    registered_name: Charles Schwab
+    register_id: 129
+    registered_website: https://www.schwab.com
+    country: United States
+    fdx_version: null
+    matched_by: domain:schwab.com
+    detected_by: sweep-fdx.py
+    detected: '2026-10-19'
+  detected_by: sweep-fdx.py
+  first_seen: '2026-10-19'
 templates: []
