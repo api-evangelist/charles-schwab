@@ -252,6 +252,8 @@ apis:
   - type: Spectral
     url: spectral/charles-schwab-spectral.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/charles-schwab/overview
 - type: Plans
   url: plans/charles-schwab-plans-pricing.yml
 - type: RateLimits
