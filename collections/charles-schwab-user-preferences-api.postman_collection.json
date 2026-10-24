@@ -1,88 +1,81 @@
 {
+  "info": {
+    "_postman_id": "728bb40b-e874-4957-a4cb-dcc9f0bf63ee",
+    "name": "Charles Schwab Trader User Preferences API",
+    "description": "REST API for accessing Charles Schwab retail brokerage accounts. Applications can list linked accounts, retrieve balances and positions, place and cancel equity and option orders, and read order and transaction history. Authentication uses OAuth 2.0 with three-legged authorization code flow; access tokens expire after 30 minutes and refresh tokens after 7 days.\n\nContact Support:\n Name: Schwab Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:06:09.000Z",
+    "updatedAt": "2026-10-21T21:06:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-728bb40b-e874-4957-a4cb-dcc9f0bf63ee"
+  },
   "item": [
     {
-      "id": "48e2d589-8af6-47de-a01e-49cec3f7aec0",
-      "name": "User Preferences",
-      "description": {
-        "content": "User account preferences and metadata",
-        "type": "text/plain"
-      },
+      "name": "userPreference",
       "item": [
         {
-          "id": "3199cc41-7129-406b-93fa-efc6a206acc1",
           "name": "Get the authenticated user preferences",
+          "id": "d931f991-af14-410f-8b15-0650ddbbefed",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Get the authenticated user preferences",
-            "description": {},
+            "method": "GET",
+            "header": [],
             "url": {
-              "path": [
-                "userPreference"
-              ],
+              "raw": "{{baseUrl}}/userPreference",
               "host": [
                 "{{baseUrl}}"
               ],
-              "query": [],
-              "variable": []
-            },
-            "method": "GET",
-            "auth": null
+              "path": [
+                "userPreference"
+              ]
+            }
           },
           "response": [
             {
-              "id": "0ba2e097-67b2-4823-a056-91f8219e98c2",
+              "id": "13b97acc-739e-4859-9979-be2bb63b3f0f",
               "name": "User preferences",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "userPreference"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
+                    "description": "Added as a part of security scheme: oauth2",
                     "key": "Authorization",
                     "value": "<token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/userPreference",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "userPreference"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:06:10.000Z",
+              "updatedAt": "2026-10-21T21:06:10.000Z",
+              "uid": "35240-13b97acc-739e-4859-9979-be2bb63b3f0f"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:06:10.000Z",
+          "updatedAt": "2026-10-21T21:06:10.000Z",
+          "uid": "35240-d931f991-af14-410f-8b15-0650ddbbefed"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.schwabapi.com/marketdata/v1",
-      "key": "baseUrl"
+      "id": "df2194c8-8815-4309-9c47-f9f2c49218e5",
+      "createdAt": "2026-10-21T21:06:10.000Z",
+      "updatedAt": "2026-10-21T21:06:10.000Z",
+      "uid": "35240-df2194c8-8815-4309-9c47-f9f2c49218e5"
     }
   ],
   "auth": {
@@ -90,29 +83,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "api"
+        "value": "api",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/token"
+        "value": "https://api.schwabapi.com/v1/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+        "value": "https://api.schwabapi.com/v1/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "ad6570e0-2297-4637-a131-89642de2027a",
-    "name": "Charles Schwab Market Data Accounts User Preferences API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.schwabapi.com/trader/v1"
     }
-  }
+  ]
 }

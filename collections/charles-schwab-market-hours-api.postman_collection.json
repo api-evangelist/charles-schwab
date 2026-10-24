@@ -1,145 +1,38 @@
 {
+  "info": {
+    "_postman_id": "db26fa6b-6fd8-47cf-97c1-b45a30e81123",
+    "name": "Charles Schwab Market Data Market Hours API",
+    "description": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:05:24.000Z",
+    "updatedAt": "2026-10-21T21:05:24.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-db26fa6b-6fd8-47cf-97c1-b45a30e81123"
+  },
   "item": [
     {
-      "id": "d9c0f148-1e0f-441b-a7aa-ff2906312670",
-      "name": "Market Hours",
-      "description": {
-        "content": "Market hours by product",
-        "type": "text/plain"
-      },
+      "name": "markets",
       "item": [
         {
-          "id": "5010c631-19f4-497e-b209-54f58875613a",
-          "name": "Get market hours for one or more markets",
-          "request": {
-            "name": "Get market hours for one or more markets",
-            "description": {},
-            "url": {
-              "path": [
-                "markets"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "markets",
-                  "value": "<string>",
-                  "description": "(Required) "
-                },
-                {
-                  "disabled": false,
-                  "key": "date",
-                  "value": "<date>"
-                }
-              ],
-              "variable": []
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{market_id}",
+          "item": [
             {
-              "id": "dc433cb9-06d0-41c9-bb00-913c625db987",
-              "name": "Market hours",
-              "originalRequest": {
+              "name": "Get market hours for a single market",
+              "id": "bdd30a2b-efdb-416f-a3bb-44fd8654e41e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
                 "url": {
-                  "path": [
-                    "markets"
-                  ],
+                  "raw": "{{baseUrl}}/markets/:market_id?date=<date>",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [
-                    {
-                      "key": "markets",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "date",
-                      "value": "<date>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "94ceb024-658a-46e3-9386-ba817cd9e876",
-          "name": "Get market hours for a single market",
-          "request": {
-            "name": "Get market hours for a single market",
-            "description": {},
-            "url": {
-              "path": [
-                "markets",
-                ":market_id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "date",
-                  "value": "<date>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "market_id",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "5d1f3f21-ebf2-404e-b7dc-c9cd95044a5d",
-              "name": "Market hours",
-              "originalRequest": {
-                "url": {
                   "path": [
                     "markets",
                     ":market_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
                   ],
                   "query": [
                     {
@@ -149,55 +42,156 @@
                   ],
                   "variable": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
+                      "id": "9f35ad9d-df39-42f0-84b9-e77ab9577f43",
                       "key": "market_id",
+                      "value": "equity",
                       "description": "(Required) "
                     }
                   ]
+                }
+              },
+              "response": [
+                {
+                  "id": "086fbc99-1c81-4867-82b7-57749ed86436",
+                  "name": "Market hours",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/markets/:market_id?date=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "markets",
+                        ":market_id"
+                      ],
+                      "query": [
+                        {
+                          "key": "date",
+                          "value": "<date>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "market_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T21:05:25.000Z",
+                  "updatedAt": "2026-10-21T21:05:25.000Z",
+                  "uid": "35240-086fbc99-1c81-4867-82b7-57749ed86436"
+                }
+              ],
+              "createdAt": "2026-10-21T21:05:25.000Z",
+              "updatedAt": "2026-10-21T21:05:25.000Z",
+              "uid": "35240-bdd30a2b-efdb-416f-a3bb-44fd8654e41e"
+            }
+          ],
+          "id": "d5b09e47-7297-4a56-a803-f4c01e022634",
+          "createdAt": "2026-10-21T21:05:24.000Z",
+          "updatedAt": "2026-10-21T21:05:24.000Z",
+          "uid": "35240-d5b09e47-7297-4a56-a803-f4c01e022634"
+        },
+        {
+          "name": "Get market hours for one or more markets",
+          "id": "1db22759-d6a2-44f1-aad5-ddc4d561926b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/markets?markets=<string>&date=<date>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "markets"
+              ],
+              "query": [
+                {
+                  "description": "(Required) ",
+                  "key": "markets",
+                  "value": "<string>"
                 },
+                {
+                  "key": "date",
+                  "value": "<date>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9adbcace-63ed-4775-9fae-d5b461e9c4cc",
+              "name": "Market hours",
+              "originalRequest": {
+                "method": "GET",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
+                    "description": "Added as a part of security scheme: oauth2",
                     "key": "Authorization",
                     "value": "<token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/markets?markets=<string>&date=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "markets"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "markets",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:05:25.000Z",
+              "updatedAt": "2026-10-21T21:05:25.000Z",
+              "uid": "35240-9adbcace-63ed-4775-9fae-d5b461e9c4cc"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:05:25.000Z",
+          "updatedAt": "2026-10-21T21:05:25.000Z",
+          "uid": "35240-1db22759-d6a2-44f1-aad5-ddc4d561926b"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.schwabapi.com/marketdata/v1",
-      "key": "baseUrl"
+      "id": "8927bb2f-c2d4-4fe3-8bd4-47f3735743d6",
+      "createdAt": "2026-10-21T21:05:24.000Z",
+      "updatedAt": "2026-10-21T21:05:24.000Z",
+      "uid": "35240-8927bb2f-c2d4-4fe3-8bd4-47f3735743d6"
     }
   ],
   "auth": {
@@ -205,29 +199,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "api"
+        "value": "api",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/token"
+        "value": "https://api.schwabapi.com/v1/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+        "value": "https://api.schwabapi.com/v1/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "a1de3ffc-a02a-42ef-a4e5-34cb4e7084a3",
-    "name": "Charles Schwab Market Data Accounts Market Hours API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.schwabapi.com/marketdata/v1"
     }
-  }
+  ]
 }

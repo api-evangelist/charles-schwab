@@ -1,89 +1,98 @@
 {
+  "info": {
+    "_postman_id": "460fe95f-0eab-492d-95a1-50568a8f78df",
+    "name": "Charles Schwab Market Data Price History API",
+    "description": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:05:54.000Z",
+    "updatedAt": "2026-10-21T21:05:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-460fe95f-0eab-492d-95a1-50568a8f78df"
+  },
   "item": [
     {
-      "id": "497e8991-553c-4397-af02-e27870fac32a",
-      "name": "Price History",
-      "description": {
-        "content": "Historical price candles",
-        "type": "text/plain"
-      },
+      "name": "pricehistory",
       "item": [
         {
-          "id": "4ebd42bc-d98d-49d5-8460-098259b53cf0",
           "name": "Get price history candles for a symbol",
+          "id": "5fdec3b3-a428-4c44-86a6-8a4d1869073a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Get price history candles for a symbol",
-            "description": {},
+            "method": "GET",
+            "header": [],
             "url": {
-              "path": [
-                "pricehistory"
-              ],
+              "raw": "{{baseUrl}}/pricehistory?symbol=<string>&periodType=day&period=<integer>&frequencyType=minute&frequency=<integer>&startDate=<integer>&endDate=<integer>",
               "host": [
                 "{{baseUrl}}"
               ],
+              "path": [
+                "pricehistory"
+              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "(Required) ",
                   "key": "symbol",
-                  "value": "<string>",
-                  "description": "(Required) "
-                },
-                {
-                  "disabled": false,
-                  "key": "periodType",
                   "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "key": "periodType",
+                  "value": "day"
+                },
+                {
                   "key": "period",
                   "value": "<integer>"
                 },
                 {
-                  "disabled": false,
                   "key": "frequencyType",
-                  "value": "<string>"
+                  "value": "minute"
                 },
                 {
-                  "disabled": false,
                   "key": "frequency",
                   "value": "<integer>"
                 },
                 {
-                  "disabled": false,
                   "key": "startDate",
                   "value": "<integer>"
                 },
                 {
-                  "disabled": false,
                   "key": "endDate",
                   "value": "<integer>"
                 }
-              ],
-              "variable": []
-            },
-            "method": "GET",
-            "auth": null
+              ]
+            }
           },
           "response": [
             {
-              "id": "02f6f0f5-56f4-4ac6-9e7a-8e47b41652d9",
+              "id": "ca842f9a-0e56-4579-a5fd-6daf0053667b",
               "name": "Candle history",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "pricehistory"
-                  ],
+                  "raw": "{{baseUrl}}/pricehistory?symbol=<string>&periodType=day&period=<integer>&frequencyType=minute&frequency=<integer>&startDate=<integer>&endDate=<integer>",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "pricehistory"
+                  ],
                   "query": [
                     {
+                      "description": "(Required) ",
                       "key": "symbol",
                       "value": "<string>"
                     },
                     {
                       "key": "periodType",
-                      "value": "<string>"
+                      "value": "day"
                     },
                     {
                       "key": "period",
@@ -91,7 +100,7 @@
                     },
                     {
                       "key": "frequencyType",
-                      "value": "<string>"
+                      "value": "minute"
                     },
                     {
                       "key": "frequency",
@@ -105,50 +114,30 @@
                       "key": "endDate",
                       "value": "<integer>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:05:54.000Z",
+              "updatedAt": "2026-10-21T21:05:54.000Z",
+              "uid": "35240-ca842f9a-0e56-4579-a5fd-6daf0053667b"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:05:54.000Z",
+          "updatedAt": "2026-10-21T21:05:54.000Z",
+          "uid": "35240-5fdec3b3-a428-4c44-86a6-8a4d1869073a"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.schwabapi.com/marketdata/v1",
-      "key": "baseUrl"
+      "id": "1b3fb0aa-5fc8-4984-b031-3776c15ec137",
+      "createdAt": "2026-10-21T21:05:54.000Z",
+      "updatedAt": "2026-10-21T21:05:54.000Z",
+      "uid": "35240-1b3fb0aa-5fc8-4984-b031-3776c15ec137"
     }
   ],
   "auth": {
@@ -156,29 +145,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "api"
+        "value": "api",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/token"
+        "value": "https://api.schwabapi.com/v1/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+        "value": "https://api.schwabapi.com/v1/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "3de8c4d2-3fc7-4019-85d2-bf28ee382301",
-    "name": "Charles Schwab Market Data Accounts Price History API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.schwabapi.com/marketdata/v1"
     }
-  }
+  ]
 }

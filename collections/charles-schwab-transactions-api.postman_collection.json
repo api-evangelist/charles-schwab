@@ -1,137 +1,144 @@
 {
+  "info": {
+    "_postman_id": "5e0b2c36-dbf7-4ca5-8d39-e319248614b6",
+    "name": "Charles Schwab Trader Transactions API",
+    "description": "REST API for accessing Charles Schwab retail brokerage accounts. Applications can list linked accounts, retrieve balances and positions, place and cancel equity and option orders, and read order and transaction history. Authentication uses OAuth 2.0 with three-legged authorization code flow; access tokens expire after 30 minutes and refresh tokens after 7 days.\n\nContact Support:\n Name: Schwab Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:06:04.000Z",
+    "updatedAt": "2026-10-21T21:06:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5e0b2c36-dbf7-4ca5-8d39-e319248614b6"
+  },
   "item": [
     {
-      "id": "3d647b02-f111-4490-a730-8046d900acae",
-      "name": "Transactions",
-      "description": {
-        "content": "Account transaction history",
-        "type": "text/plain"
-      },
+      "name": "accounts",
       "item": [
         {
-          "id": "8cf01af4-ab0b-4242-8819-f5c3196c2281",
-          "name": "List account transactions",
-          "request": {
-            "name": "List account transactions",
-            "description": {},
-            "url": {
-              "path": [
-                "accounts",
-                ":accountNumber",
-                "transactions"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "startDate",
-                  "value": "<dateTime>"
-                },
-                {
-                  "disabled": false,
-                  "key": "endDate",
-                  "value": "<dateTime>"
-                },
-                {
-                  "disabled": false,
-                  "key": "types",
-                  "value": "<string>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountNumber",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{accountNumber}",
+          "item": [
             {
-              "id": "6596fc32-0775-4af2-81a2-c3ff36a2e092",
-              "name": "Transactions list",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountNumber",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "startDate",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "endDate",
-                      "value": "<dateTime>"
-                    },
-                    {
-                      "key": "types",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountNumber",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "transactions",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "List account transactions",
+                  "id": "b087844d-898b-4a75-bd74-9a0f6ecef14e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountNumber/transactions?startDate=<dateTime>&endDate=<dateTime>&types=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountNumber",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "key": "startDate",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "key": "types",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "089b87f8-647d-4235-acef-8a1f9f824576",
+                          "key": "accountNumber",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "11c89eee-9e93-4cb4-9b87-583b1eab4500",
+                      "name": "Transactions list",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountNumber/transactions?startDate=<dateTime>&endDate=<dateTime>&types=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountNumber",
+                            "transactions"
+                          ],
+                          "query": [
+                            {
+                              "key": "startDate",
+                              "value": "<dateTime>"
+                            },
+                            {
+                              "key": "endDate",
+                              "value": "<dateTime>"
+                            },
+                            {
+                              "key": "types",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountNumber"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T21:06:05.000Z",
+                      "updatedAt": "2026-10-21T21:06:05.000Z",
+                      "uid": "35240-11c89eee-9e93-4cb4-9b87-583b1eab4500"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:06:05.000Z",
+                  "updatedAt": "2026-10-21T21:06:05.000Z",
+                  "uid": "35240-b087844d-898b-4a75-bd74-9a0f6ecef14e"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "067e665e-eb83-444f-8b9c-185153e10728",
+              "createdAt": "2026-10-21T21:06:05.000Z",
+              "updatedAt": "2026-10-21T21:06:05.000Z",
+              "uid": "35240-067e665e-eb83-444f-8b9c-185153e10728"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "d096af15-a0eb-4fac-ac71-cc5d0b293b2d",
+          "createdAt": "2026-10-21T21:06:05.000Z",
+          "updatedAt": "2026-10-21T21:06:05.000Z",
+          "uid": "35240-d096af15-a0eb-4fac-ac71-cc5d0b293b2d"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.schwabapi.com/marketdata/v1",
-      "key": "baseUrl"
+      "id": "407f579a-c9c0-4b0b-9dec-f15c4ba46680",
+      "createdAt": "2026-10-21T21:06:05.000Z",
+      "updatedAt": "2026-10-21T21:06:05.000Z",
+      "uid": "35240-407f579a-c9c0-4b0b-9dec-f15c4ba46680"
     }
   ],
   "auth": {
@@ -139,29 +146,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "api"
+        "value": "api",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/token"
+        "value": "https://api.schwabapi.com/v1/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+        "value": "https://api.schwabapi.com/v1/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "dc57481a-814e-4af6-81ae-7646fd9e8e20",
-    "name": "Charles Schwab Market Data Accounts Transactions API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.schwabapi.com/trader/v1"
     }
-  }
+  ]
 }

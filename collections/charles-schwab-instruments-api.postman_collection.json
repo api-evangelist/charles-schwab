@@ -1,110 +1,105 @@
 {
+  "info": {
+    "_postman_id": "c2b576a3-2b83-4ecd-bb2e-fc5a4b8c43d1",
+    "name": "Charles Schwab Market Data Instruments API",
+    "description": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:05:20.000Z",
+    "updatedAt": "2026-10-21T21:05:20.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c2b576a3-2b83-4ecd-bb2e-fc5a4b8c43d1"
+  },
   "item": [
     {
-      "id": "d38ccd53-1cb9-46e7-9c65-ac5e18834a76",
-      "name": "Instruments",
-      "description": {
-        "content": "Instrument metadata search",
-        "type": "text/plain"
-      },
+      "name": "instruments",
       "item": [
         {
-          "id": "097c4ae8-2feb-4663-b8ea-4b033128e068",
           "name": "Search instruments by symbol or CUSIP",
+          "id": "64589ffc-c9e2-484e-bb4f-ef63a1f9cee1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Search instruments by symbol or CUSIP",
-            "description": {},
+            "method": "GET",
+            "header": [],
             "url": {
-              "path": [
-                "instruments"
-              ],
+              "raw": "{{baseUrl}}/instruments?symbol=<string>&projection=symbol-regex",
               "host": [
                 "{{baseUrl}}"
               ],
+              "path": [
+                "instruments"
+              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "(Required) ",
                   "key": "symbol",
-                  "value": "<string>",
-                  "description": "(Required) "
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "(Required) ",
                   "key": "projection",
-                  "value": "<string>",
-                  "description": "(Required) "
+                  "value": "symbol-regex"
                 }
-              ],
-              "variable": []
-            },
-            "method": "GET",
-            "auth": null
+              ]
+            }
           },
           "response": [
             {
-              "id": "f6bcbdfd-9747-446b-a0ac-05d5d9e0f8a6",
+              "id": "02cc7e70-d584-47c3-a026-e1fbcb07b0f0",
               "name": "Instrument metadata",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "instruments"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "symbol",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "projection",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
+                    "description": "Added as a part of security scheme: oauth2",
                     "key": "Authorization",
                     "value": "<token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?symbol=<string>&projection=symbol-regex",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) ",
+                      "key": "projection",
+                      "value": "symbol-regex"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T21:05:21.000Z",
+              "updatedAt": "2026-10-21T21:05:21.000Z",
+              "uid": "35240-02cc7e70-d584-47c3-a026-e1fbcb07b0f0"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:05:20.000Z",
+          "updatedAt": "2026-10-21T21:05:20.000Z",
+          "uid": "35240-64589ffc-c9e2-484e-bb4f-ef63a1f9cee1"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.schwabapi.com/marketdata/v1",
-      "key": "baseUrl"
+      "id": "8980f8c7-1c87-4fee-b4a1-fdba3e21b458",
+      "createdAt": "2026-10-21T21:05:20.000Z",
+      "updatedAt": "2026-10-21T21:05:20.000Z",
+      "uid": "35240-8980f8c7-1c87-4fee-b4a1-fdba3e21b458"
     }
   ],
   "auth": {
@@ -112,29 +107,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "api"
+        "value": "api",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/token"
+        "value": "https://api.schwabapi.com/v1/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.schwabapi.com/v1/oauth/authorize"
+        "value": "https://api.schwabapi.com/v1/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "f6fd9b2c-f4df-452f-8357-add1498afecf",
-    "name": "Charles Schwab Market Data Accounts Instruments API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "REST API for retrieving real-time and historical market data from Charles Schwab including quotes, option chains, price history, market hours, instrument metadata, and movers for major US indices.\n\nContact Support:\n Name: Schwab Developer Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.schwabapi.com/marketdata/v1"
     }
-  }
+  ]
 }
